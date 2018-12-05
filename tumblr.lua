@@ -178,7 +178,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       tries = tries + 1
       if tries >= 5 then
         io.stdout:write("\nI give up...\n")
-        id.stdout:flush()
+        io.stdout:flush()
         tries = 0
         if allowed(url["url"], nil) then
           return wget.actions.ABORT
@@ -186,11 +186,11 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
           return wget.actions.EXIT
         end
       else
-        wget.actions.CONTINUE
+        return wget.actions.CONTINUE
       end
     end
   end
-    
+
   tries = 0
 
   local sleep_time = 0
