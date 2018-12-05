@@ -194,7 +194,7 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
 
-        if item_type == 'blog':
+        if item_type == 'tumblr-blog':
             split_items = item_value.split(':')
             for x in split_items:
                 wget_args.extend(['--warc-header', 'tumblr-blog: ' + x])
