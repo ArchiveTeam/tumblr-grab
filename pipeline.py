@@ -163,7 +163,7 @@ class WgetArgs(object):
     def realize(self, item):
         wget_args = [
             WGET_LUA,
-            '-U', `_AGENT,
+            '-U', USER_AGENT,
             '-nv',
             '--no-cookies',
             '--lua-script', 'tumblr.lua',
