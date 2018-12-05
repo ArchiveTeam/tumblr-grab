@@ -148,8 +148,9 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   end
   
   if status_code >= 500 or
-    (status_code >= 400 and status_code ~= 404) or
-    status_code == 0 then
+    (status_code >= 400 and status_code < 403 and status_code ~= 404) or
+    status_code == 0 or
+    status_code > 404 then
     io.stdout:write("Server returned "..http_stat.statcode.." ("..err.."). Sleeping.\n")
     io.stdout:flush()
     os.execute("sleep 1")
@@ -167,7 +168,28 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       return wget.actions.CONTINUE
     end
   end
-
+  if status_code == 403 then
+    if string.match(url["host"], "assets.tumblr.com$") then
+      io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Skipping.\n")
+    else
+      io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Sleeping.\n")
+      io.stdout:flush()
+      os.execute("sleep 1")
+      tries = tries + 1
+      if tries >= 5 then
+        io.stdout:write("\nI give up...\n")
+        id.stdout:flush()
+        tries = 0
+        if allowed(url["url"], nil) then
+          return wget.actions.ABORT
+        else
+          return wget.actions.EXIT
+        end
+      else
+        wget.actions.CONTINUE
+      end
+    end
+    
   tries = 0
 
   local sleep_time = 0
