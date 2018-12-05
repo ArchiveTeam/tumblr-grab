@@ -184,7 +184,7 @@ class WgetArgs(object):
             '--warc-file', ItemInterpolation('%(item_dir)s/%(warc_file_base)s'),
             '--warc-header', 'operator: Archive Team',
             '--warc-header', 'tumblr-dld-script-version: ' + VERSION,
-            '--warc-header', ItemInterpolation('tumblr-item: %(item_name)s')
+            '--warc-header', ItemInterpolation('tumblr-blog: %(item_name)s')
         ]
 
         item_name = item['item_name']
