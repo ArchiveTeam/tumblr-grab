@@ -189,6 +189,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
         wget.actions.CONTINUE
       end
     end
+  end
     
   tries = 0
 
