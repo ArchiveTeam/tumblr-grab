@@ -40,7 +40,8 @@ allowed = function(url, parenturl)
   or string.match(url, "[<>\\%*%$;%^%[%],%(%)]")
   or string.match(url, "//$")
   or string.match(url, "ns%.adobe%.com")
-  or string.match(url, "www%.change%.org") then
+  or string.match(url, "www%.change%.org")
+  or string.match(url, "^https?://[^.]+/") then
     return false
   end
   
