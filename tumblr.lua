@@ -38,7 +38,8 @@ allowed = function(url, parenturl)
   local concat = "^https?://".. item_value .. ".tumblr.com"
   if string.match(url, "'+")
   or string.match(url, "[<>\\%*%$;%^%[%],%(%)]")
-  or string.match(url, "//$") then
+  or string.match(url, "//$")
+  or string.match(url, "ns%.adobe%.com") then
     return false
   end
   
