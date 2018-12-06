@@ -50,7 +50,7 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/post/")
   or string.match(url, "^https?://assets%.tumblr%.com/archive")
   or string.match(url, "^https?://assets%.tumblr%.com/filter%-by")
-  or or string.match(url, "^https?://assets%.tumblr%.com/client") then
+  or string.match(url, "^https?://assets%.tumblr%.com/client") then
     return false
   end
   
