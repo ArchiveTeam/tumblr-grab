@@ -46,7 +46,10 @@ allowed = function(url, parenturl)
     return false
   end
   
-  if string.match(url, concat) then
+  if string.match(url, concat)
+  or string.match(url, "^https?://assets%.tumblr%.com")
+  or string.match(url, "^https?://static%.tumblr%.com")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") then
     return true
   end
   

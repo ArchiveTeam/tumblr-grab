@@ -58,7 +58,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = '20181207.10'
+VERSION = '20181207.11'
 USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html; ArchiveTeam'
 TRACKER_ID = 'tumbledown'
 TRACKER_HOST = '192.168.1.194:9080'
