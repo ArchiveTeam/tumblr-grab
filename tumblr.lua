@@ -46,7 +46,11 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/%p+%d+")
   or string.match(url, "^https?://assets%.tumblr%.com/%p+%d+")
   or string.match(url, "^https?://static%.tumblr%.com/%p+%d+")
-  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.pnj") then
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.pnj")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/post/")
+  or string.match(url, "^https?://assets%.tumblr%.com/archive")
+  or string.match(url, "^https?://assets%.tumblr%.com/filter%-by")
+  or or string.match(url, "^https?://assets%.tumblr%.com/client") then
     return false
   end
   
