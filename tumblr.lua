@@ -35,7 +35,7 @@ read_file = function(file)
 end
 
 allowed = function(url, parenturl)
-  local concat = "^https?://".. item_value .. "%.tumblr%.com"
+  local concat = "^https?://".. item_value .. "%.tumblr%.com/?.*/?.*/?.*$"
   if string.match(url, "'+")
   or string.match(url, "[<>\\%*%$;%^%[%],%(%)]")
   or string.match(url, "//$")
@@ -46,7 +46,7 @@ allowed = function(url, parenturl)
     return false
   end
   
-  if string.gmatch(url, concat) then
+  if string.match(url, concat) then
     return true
   end
   
@@ -54,7 +54,6 @@ allowed = function(url, parenturl)
 end
 
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
-  print(table.show({urlpos=urlpos, parent=parent, depth=depth, start_url_parsed=start_url_parsed, iri=iri, verdict=verdict, reason=reason}, "download_child"))
   local url = urlpos["url"]["url"]
   local html = urlpos["link_expect_html"]
   
@@ -135,14 +134,11 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     end
   end
 
-  print(table.show({file=file, url=url, is_css=is_css, iri=iri}, "get_urls"))
   return urls
 end
 
 wget.callbacks.httploop_result = function(url, err, http_stat)
   status_code = http_stat["statcode"]
-  
-  print(table.show({url=url, err=err, http_stat=http_stat }, "httploop_result"))
   
   url_count = url_count + 1
   io.stdout:write(url_count .. "=" .. status_code .. " " .. url["url"] .. "  \n")
