@@ -39,9 +39,10 @@ allowed = function(url, parenturl)
   if string.match(url, "'+")
   or string.match(url, "[<>\\%*%$;%^%[%],%(%)]")
   or string.match(url, "//$")
-  or string.match(url, "ns%.adobe%.com")
-  or string.match(url, "www%.change%.org")
-  or string.match(url, "^https?://[^.]+/") then
+  or string.match(url, "^https?://ns%.adobe%.com")
+  or string.match(url, "^https?://www%.change%.org")
+  or string.match(url, "^https?://[^.]+/") 
+  or string.match(url, "^https?://radar%.cedexis%.com") then
     return false
   end
   
