@@ -2,7 +2,7 @@ dofile("table_show.lua")
 dofile("urlcode.lua")
 
 local item_type = os.getenv('item_type')
-local item_value = os.getenv('item_value')
+local item_value = string.gsub(os.getenv('item_value'), "%-", "%%-")
 local item_dir = os.getenv('item_dir')
 local warc_file_base = os.getenv('warc_file_base')
 
