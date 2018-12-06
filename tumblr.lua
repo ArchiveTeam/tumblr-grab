@@ -42,7 +42,11 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://ns%.adobe%.com")
   or string.match(url, "^https?://www%.change%.org")
   or string.match(url, "^https?://[^.]+/") 
-  or string.match(url, "^https?://radar%.cedexis%.com") then
+  or string.match(url, "^https?://radar%.cedexis%.com")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/%p+%d+")
+  or string.match(url, "^https?://assets%.tumblr%.com/%p+%d+")
+  or string.match(url, "^https?://static%.tumblr%.com/%p+%d+")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.pnj") then
     return false
   end
   
