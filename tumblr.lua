@@ -18,7 +18,8 @@ local abortgrab = false
 -- Goal: Get more posts, using epoch minus time in seconds for each month
 local epochtime = 1543953699
 local epochpermonth = 2629743
-local concat = "^https?://".. item_value .. "%.tumblr%.com/?.*/?.*/?.*$"
+local concat = "^https?://".. item_value .. "%.tumblr%.com/?.*/?.*/?.*/?.*/?.*$"
+--local video = "^https?://www%.tumblr%.com/video/".. item_value .. "/"
 
 for ignore in io.open("ignore-list", "r"):lines() do
   downloaded[ignore] = true
@@ -220,7 +221,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     --if string.match(url["host"], "")
     if string.match(url["host"], "assets%.tumblr%.com")
     or string.match(url["host"], "static%.tumblr%.com")
-    or string.match(url["host"], "[0-9]+%.media%.tumblr%.com") then
+    or string.match(url["host"], "[a-z0-9]+%.media%.tumblr%.com") then
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Skipping.\n")
       tries = 0
       return wget.actions.EXIT
