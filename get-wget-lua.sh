@@ -36,7 +36,7 @@ else
   exit 1
 fi
 
-if ./configure $CONFIGURE_SSL_OPT --disable-nls && make && src/wget -V | grep -q lua
+if autoconf && ./configure $CONFIGURE_SSL_OPT --disable-nls && make && src/wget -V | grep -q lua
 then
   cp src/wget ../wget-lua
   cd ../
@@ -49,9 +49,28 @@ then
   ./wget-lua --help | grep -iE "gnu|warc|lua"
   rm -rf get-wget-lua.tmp
   exit 0
-else
-  echo
-  echo "wget-lua not successfully built."
-  echo
-  exit 1
 fi
+echo
+echo "wget-lua not successfully built."
+echo "attempting patch for RedHat"
+echo
+sed -i 's%lua5.1%lua-5.1%g' configure.ac
+if autoconf && ./configure $CONFIGURE_SSL_OPT --disable-nls && make && src/wget -V | grep -q lua
+then
+  cp src/wget ../wget-lua
+  cd ../
+  echo
+  echo
+  echo "###################################################################"
+  echo
+  echo "wget-lua successfully built."
+  echo
+  ./wget-lua --help | grep -iE "gnu|warc|lua"
+  rm -rf get-wget-lua.tmp
+  exit 0
+fi
+
+echo
+echo "wget-lua not successfully built."
+echo
+exit 1
