@@ -56,9 +56,9 @@ allowed = function(url, parenturl)
   end
   
   if string.match(url, concat)
-  or (string.match(url, "^https?://assets%.tumblr%.com") and string.match(parenturl, concat))
-  or (string.match(url, "^https?://static%.tumblr%.com") and string.match(parenturl, concat))
-  or (string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") and string.match(parenturl, concat)) then
+  or string.match(url, "^https?://assets%.tumblr%.com")
+  or string.match(url, "^https?://static%.tumblr%.com")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") then
     return true
   end
   
@@ -70,7 +70,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   local html = urlpos["link_expect_html"]
   
   if (downloaded[url] ~= true and addedtolist[url] ~= true)
-  and (allowed(url, parent["url"]) or html == 0) then
+  and ((allowed(url, parent["url"]) and string.match(parent["url"], concat) or html == 0) then
     addedtolist[url] = true
     return true
   end
