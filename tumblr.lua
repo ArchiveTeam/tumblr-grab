@@ -70,7 +70,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   local html = urlpos["link_expect_html"]
   
   if (downloaded[url] ~= true and addedtolist[url] ~= true)
-  and ((allowed(url, parent["url"]) and string.match(parent["url"], concat) or html == 0) then
+  and ((allowed(url, parent["url"]) and string.match(parent["url"], concat)) or html == 0) then
     addedtolist[url] = true
     return true
   end
