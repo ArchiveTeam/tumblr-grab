@@ -51,7 +51,8 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://assets%.tumblr%.com/archive")
   or string.match(url, "^https?://assets%.tumblr%.com/filter%-by")
   or string.match(url, "^https?://assets%.tumblr%.com/client")
-  or string.match(url, "^https?://static%.tumblr%.com/[%u%p%l]+") then
+  or string.match(url, "^https?://static%.tumblr%.com/[%u%p%l]+")
+  or string.match(url, "ios%-app") then
     return false
   end
   
@@ -60,8 +61,8 @@ allowed = function(url, parenturl)
   end
   
   if string.match(url, "^https?://assets%.tumblr%.com")
-  (string.match(url, "^https?://static%.tumblr%.com")
-  (string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") then
+  or string.match(url, "^https?://static%.tumblr%.com")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") then
     if parenturl ~= nil then
       if string.match(parenturl, concat) then
         return true
