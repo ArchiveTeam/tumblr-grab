@@ -19,7 +19,7 @@ local abortgrab = false
 local epochtime = 1543953699
 local epochpermonth = 2629743
 local concat = "^https?://".. item_value .. "%.tumblr%.com/?.*/?.*/?.*/?.*/?.*$"
---local video = "^https?://www%.tumblr%.com/video/".. item_value .. "/"
+local video = "^https?://www%.tumblr%.com/video/".. item_value .. "/?.*/?.*/?.*"
 
 for ignore in io.open("ignore-list", "r"):lines() do
   downloaded[ignore] = true
@@ -67,6 +67,10 @@ allowed = function(url, parenturl)
         return false
       end
     end
+    return true
+  end
+  
+  if string.match(url, video) then
     return true
   end
   
