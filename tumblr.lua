@@ -57,6 +57,15 @@ allowed = function(url, parenturl)
   end
   
   if string.match(url, concat) then
+    if parenturl ~= nil then
+      if string.match(parenturl, concat) or string.match(url, "^https?://www%.tumblr%.com/") then
+        print("Accepting: "..parenturl.."\n")
+        return true
+      else
+        print("Rejecting: "..parenturl.."\n")
+        return false
+      end
+    end
     return true
   end
   
@@ -65,6 +74,16 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") then
     if parenturl ~= nil then
       if string.match(parenturl, concat) then
+        return true
+      end
+    else
+      return true
+    end
+  end
+  
+  if string.match(url, "^https?://ve%.media%.tumblr%.com") then
+    if parenturl ~= nil then
+      if string.match(parenturl, "^https?://www%.tumblr%.com") then
         return true
       end
     else
