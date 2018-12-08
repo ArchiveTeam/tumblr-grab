@@ -214,6 +214,9 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       io.stdout:write("\nI give up...\n")
       io.stdout:flush()
       tries = 0
+      if string.match(url["url"], "_%d+.[pjg][npi][ggf]$") then
+        return wget.actions.EXIT
+      end
       if allowed(url["url"], nil) then
         return wget.actions.ABORT
       else
