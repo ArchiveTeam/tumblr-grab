@@ -18,6 +18,7 @@ local abortgrab = false
 -- Goal: Get more posts, using epoch minus time in seconds for each month
 local epochtime = 1543953699
 local epochpermonth = 2629743
+local concat = "^https?://".. item_value .. "%.tumblr%.com/?.*/?.*/?.*$"
 
 for ignore in io.open("ignore-list", "r"):lines() do
   downloaded[ignore] = true
@@ -35,7 +36,6 @@ read_file = function(file)
 end
 
 allowed = function(url, parenturl)
-  local concat = "^https?://".. item_value .. "%.tumblr%.com/?.*/?.*/?.*$"
   if string.match(url, "'+")
   or string.match(url, "[<>\\%*%$;%^%[%],%(%)]")
   or string.match(url, "//$")
@@ -50,14 +50,15 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/post/")
   or string.match(url, "^https?://assets%.tumblr%.com/archive")
   or string.match(url, "^https?://assets%.tumblr%.com/filter%-by")
-  or string.match(url, "^https?://assets%.tumblr%.com/client") then
+  or string.match(url, "^https?://assets%.tumblr%.com/client")
+  or string.match(url, "^https?://static%.tumblr%.com/[%u%p%l]+") then
     return false
   end
   
   if string.match(url, concat)
-  or string.match(url, "^https?://assets%.tumblr%.com")
-  or string.match(url, "^https?://static%.tumblr%.com")
-  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") then
+  or (string.match(url, "^https?://assets%.tumblr%.com") and string.match(parenturl, concat))
+  or (string.match(url, "^https?://static%.tumblr%.com") and string.match(parenturl, concat))
+  or (string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") and string.match(parenturl, concat)) then
     return true
   end
   
