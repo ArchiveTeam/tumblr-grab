@@ -60,8 +60,8 @@ if not WGET_LUA:
 # It will be added to the WARC files and reported to the tracker.
 VERSION = '20181208.06'
 USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html; ArchiveTeam)'
-TRACKER_ID = 'tumbledown'
-TRACKER_HOST = 'server5.kiska.pw:9080'
+TRACKER_ID = 'tumblr'
+TRACKER_HOST = 'tracker.archiveteam.org'
 
 
 ###########################################################################

@@ -103,6 +103,11 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   local url = urlpos["url"]["url"]
   local html = urlpos["link_expect_html"]
   
+  if string.find(url, "px.srvcs.tumblr.com") then
+    -- Ignore px.srvcs.tumblr.com tracking domain
+    return false
+  end
+  
   if (downloaded[url] ~= true and addedtolist[url] ~= true)
   and (allowed(url, parent["url"]) or html == 0) then
     addedtolist[url] = true
@@ -248,7 +253,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       end
     end
   end
-  
+
   tries = 0
 
   local sleep_time = 0
