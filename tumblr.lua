@@ -60,10 +60,8 @@ allowed = function(url, parenturl)
   if string.match(url, concat) then
     if parenturl ~= nil then
       if string.match(parenturl, concat) or string.match(url, "^https?://www%.tumblr%.com/") then
-        print("Accepting: "..parenturl.."\n")
         return true
       else
-        print("Rejecting: "..parenturl.."\n")
         return false
       end
     end
