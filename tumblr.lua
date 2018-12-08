@@ -2,7 +2,7 @@ dofile("table_show.lua")
 dofile("urlcode.lua")
 
 local item_type = os.getenv('item_type')
-local item_value = os.getenv('item_value')
+local item_value = string.gsub(os.getenv('item_value'), "%-", "%%-")
 local item_dir = os.getenv('item_dir')
 local warc_file_base = os.getenv('warc_file_base')
 
@@ -18,6 +18,8 @@ local abortgrab = false
 -- Goal: Get more posts, using epoch minus time in seconds for each month
 local epochtime = 1543953699
 local epochpermonth = 2629743
+local concat = "^https?://".. item_value .. "%.tumblr%.com/?.*/?.*/?.*/?.*/?.*$"
+local video = "^https?://www%.tumblr%.com/video/".. item_value .. "/?.*/?.*/?.*"
 
 for ignore in io.open("ignore-list", "r"):lines() do
   downloaded[ignore] = true
@@ -35,12 +37,63 @@ read_file = function(file)
 end
 
 allowed = function(url, parenturl)
-  if string.match(url, "'+") or string.match(url, "[<>\\%*%$;%^%[%],%(%)]") or string.match(url, "//$") then
+  if string.match(url, "'+")
+  or string.match(url, "[<>\\%*%$;%^%[%],%(%)]")
+  or string.match(url, "//$")
+  or string.match(url, "^https?://ns%.adobe%.com")
+  or string.match(url, "^https?://www%.change%.org")
+  or string.match(url, "^https?://[^.]+/") 
+  or string.match(url, "^https?://radar%.cedexis%.com")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/%p+%d+")
+  or string.match(url, "^https?://assets%.tumblr%.com/%p+%d+")
+  or string.match(url, "^https?://static%.tumblr%.com/%p+%d+")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.pnj")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/post/")
+  or string.match(url, "^https?://assets%.tumblr%.com/archive")
+  or string.match(url, "^https?://assets%.tumblr%.com/filter%-by")
+  or string.match(url, "^https?://assets%.tumblr%.com/client")
+  or string.match(url, "^https?://static%.tumblr%.com/[%u%p%l]+")
+  or string.match(url, "ios%-app") then
     return false
   end
   
-  if string.match(url, "^https?://.+.tumblr.com/") then
+  if string.match(url, concat) then
+    if parenturl ~= nil then
+      if string.match(parenturl, concat) or string.match(url, "^https?://www%.tumblr%.com/") then
+        print("Accepting: "..parenturl.."\n")
+        return true
+      else
+        print("Rejecting: "..parenturl.."\n")
+        return false
+      end
+    end
     return true
+  end
+  
+  if string.match(url, video) then
+    return true
+  end
+  
+  if string.match(url, "^https?://assets%.tumblr%.com")
+  or string.match(url, "^https?://static%.tumblr%.com")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") then
+    if parenturl ~= nil then
+      if string.match(parenturl, concat) then
+        return true
+      end
+    else
+      return true
+    end
+  end
+  
+  if string.match(url, "^https?://[a-z]+%.media%.tumblr%.com") then
+    if parenturl ~= nil then
+      if string.match(parenturl, "^https?://www%.tumblr%.com") then
+        return true
+      end
+    else
+      return true
+    end
   end
   
   return false
@@ -137,7 +190,7 @@ end
 
 wget.callbacks.httploop_result = function(url, err, http_stat)
   status_code = http_stat["statcode"]
-
+  
   url_count = url_count + 1
   io.stdout:write(url_count .. "=" .. status_code .. " " .. url["url"] .. "  \n")
   io.stdout:flush()
@@ -153,9 +206,8 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   end
   
   if status_code >= 500 or
-    (status_code >= 400 and status_code < 403 and status_code ~= 404) or
-    status_code == 0 or
-    status_code > 404 then
+    (status_code > 400 and status_code < 403 and status_code ~= 404)
+    or status_code > 404 then
     io.stdout:write("Server returned "..http_stat.statcode.." ("..err.."). Sleeping.\n")
     io.stdout:flush()
     os.execute("sleep 1")
@@ -173,9 +225,14 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       return wget.actions.CONTINUE
     end
   end
-  if status_code == 403 then
-    if string.match(url["host"], "assets.tumblr.com$") then
+  
+  if status_code == 403 or status_code == 400 or status_code == 0 then
+    --if string.match(url["host"], "")
+    if string.match(url["host"], "assets%.tumblr%.com")
+    or string.match(url["host"], "static%.tumblr%.com")
+    or string.match(url["host"], "[a-z0-9]+%.media%.tumblr%.com") then
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Skipping.\n")
+      tries = 0
       return wget.actions.EXIT
     else
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Sleeping.\n")
