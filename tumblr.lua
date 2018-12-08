@@ -81,7 +81,7 @@ allowed = function(url, parenturl)
     end
   end
   
-  if string.match(url, "^https?://ve%.media%.tumblr%.com") then
+  if string.match(url, "^https?://[a-z]+%.media%.tumblr%.com") then
     if parenturl ~= nil then
       if string.match(parenturl, "^https?://www%.tumblr%.com") then
         return true
