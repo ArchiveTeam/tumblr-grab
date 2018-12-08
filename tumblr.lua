@@ -208,7 +208,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     or status_code > 404 then
     io.stdout:write("Server returned "..http_stat.statcode.." ("..err.."). Sleeping.\n")
     io.stdout:flush()
-    os.execute("sleep 1")
+    os.execute("sleep 10")
     tries = tries + 1
     if tries >= 5 then
       io.stdout:write("\nI give up...\n")
