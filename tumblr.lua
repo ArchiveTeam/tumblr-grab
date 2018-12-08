@@ -228,7 +228,8 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     --if string.match(url["host"], "")
     if string.match(url["host"], "assets%.tumblr%.com")
     or string.match(url["host"], "static%.tumblr%.com")
-    or string.match(url["host"], "[a-z0-9]+%.media%.tumblr%.com") then
+    or string.match(url["host"], "[a-z0-9]+%.media%.tumblr%.com")
+    or string.match(url["host"], "vtt%.tumblr%.com") then
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Skipping.\n")
       tries = 0
       return wget.actions.EXIT
