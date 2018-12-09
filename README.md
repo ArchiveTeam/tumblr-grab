@@ -92,7 +92,7 @@ You need Homebrew. Ensure that you have the OS X equivalent of bzip2 installed a
     pip install --upgrade seesaw
     [... pretty much the same as above ...]
 
-**There is a known issue with some packaged versions of rsync. If you get errors during the upload stage, {{REPO_NAME}} will not work with your rsync version.**
+**There is a known issue with some packaged versions of rsync. If you get errors during the upload stage, `tumblr-grab` will not work with your rsync version.**
 
 This supposedly fixes it:
 
