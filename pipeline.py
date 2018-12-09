@@ -218,10 +218,10 @@ class WgetArgs(object):
 # This will be shown in the warrior management panel. The logo should not
 # be too big. The deadline is optional.
 project = Project(
-    title = 'tumbledown',
+    title = 'Tumble',
     project_html = '''
     <img class="project-logo" alt="logo" src="https://archiveteam.org/images/b/ba/Tumblr_on_white.png" height="50px"/>
-    <h2>Tumblr <span class="links"><a href="http://www.tumblr.com/">Website</a> &middot; <a href="http://tracker.archiveteam.org/tumbledown/">Leaderboard</a></span></h2>
+    <h2>Tumblr <span class="links"><a href="http://www.tumblr.com/">Website</a> &middot; <a href="http://tracker.archiveteam.org/tumblr/">Leaderboard</a></span></h2>
     '''
 )
 
