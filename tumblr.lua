@@ -48,6 +48,7 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://assets%.tumblr%.com/%p+%d+")
   or string.match(url, "^https?://static%.tumblr%.com/%p+%d+")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.pnj")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.gif")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_16%.pnj")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_16%.gif")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/post/")
@@ -105,6 +106,14 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   
   if string.find(url, "px.srvcs.tumblr.com") then
     -- Ignore px.srvcs.tumblr.com tracking domain
+    return false
+  end
+
+  if string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.pnj")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.gif")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_16%.pnj")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_16%.gif") then
+    -- Ignore small avatars (16x16 and 64x64)
     return false
   end
   
