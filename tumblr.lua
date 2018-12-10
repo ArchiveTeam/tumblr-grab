@@ -21,6 +21,8 @@ local epochpermonth = 2629743
 local concat = "^https?://".. item_value .. "%.tumblr%.com/?[^/]*/?[^/]*/?[^/]*/?[^/]*/?[^/]*$"
 local video = "^https?://www%.tumblr%.com/video/".. item_value .. "/?.*/?.*/?.*"
 
+local discovered_blogs = {}
+
 for ignore in io.open("ignore-list", "r"):lines() do
   downloaded[ignore] = true
 end
@@ -58,6 +60,13 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://static%.tumblr%.com/[%u%p%l]+")
   or string.match(url, "ios%-app://") then
     return false
+  end
+
+  if string.match(url, "^https?://[^%.]+%.tumblr%.com") then
+    local blogname = string.match(url, "^https?://([^%.]+)%.tumblr%.com")
+    if blogname ~= item_value then
+      discovered_blogs[blogname] = true
+    end
   end
   
   if string.match(url, concat) then
@@ -277,6 +286,16 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   end
 
   return wget.actions.NOTHING
+end
+
+wget.callbacks.finish = function(start_time, end_time, wall_time, numurls, total_downloaded_bytes, total_download_time)
+  local file = io.open(item_dir..'/'..warc_file_base..'_data.txt', 'w')
+  if item_type == "tumblr-blog" then
+    for blog, _ in pairs(discovered_blogs) do
+      file:write("tumblr-blog:" .. blog .. "\n")
+    end
+  end
+  file:close()
 end
 
 wget.callbacks.before_exit = function(exit_status, exit_status_string)
