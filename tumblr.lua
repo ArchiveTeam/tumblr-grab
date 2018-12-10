@@ -18,7 +18,7 @@ local abortgrab = false
 -- Goal: Get more posts, using epoch minus time in seconds for each month
 local epochtime = 1543953699
 local epochpermonth = 2629743
-local concat = "^https?://".. item_value .. "%.tumblr%.com/?.*/?.*/?.*/?.*/?.*$"
+local concat = "^https?://".. item_value .. "%.tumblr%.com/?[^/]*/?[^/]*/?[^/]*/?[^/]*/?[^/]*$"
 local video = "^https?://www%.tumblr%.com/video/".. item_value .. "/?.*/?.*/?.*"
 
 for ignore in io.open("ignore-list", "r"):lines() do
