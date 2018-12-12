@@ -64,7 +64,8 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/.*/amp$")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/rss$")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/reblog")
-  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/.*%?route=") then
+  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/.*%?route=")
+  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/[^/]+%%") then
     return false
   end
 
