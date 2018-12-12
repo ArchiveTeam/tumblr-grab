@@ -225,7 +225,7 @@ project = Project(
     title = 'Tumblr',
     project_html = '''
     <img class="project-logo" alt="logo" src="https://archiveteam.org/images/b/ba/Tumblr_on_white.png" height="50px"/>
-    <h2>Tumblr <span class="links"><a href="http://www.tumblr.com/">Website</a> &middot; <a href="http://tracker.archiveteam.org/tumblr/">Leaderboard</a></span></h2>
+    <h2>Tumblr <span class="links"><a href="https://www.tumblr.com/">Website</a> &middot; <a href="https://tracker.archiveteam.org/tumblr/">Leaderboard</a></span></h2>
     '''
 )
 
