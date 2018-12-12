@@ -12,6 +12,7 @@ local url_count = 0
 local tries = 0
 local downloaded = {}
 local addedtolist = {}
+local ignored = {}
 local abortgrab = false
 
 -- Tumblr seem to be using epoch time on the /archive endpoint
@@ -25,6 +26,7 @@ local discovered_blogs = {}
 
 for ignore in io.open("ignore-list", "r"):lines() do
   downloaded[ignore] = true
+  ignored[ignore] = true
 end
 
 read_file = function(file)
@@ -121,6 +123,11 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     -- Ignore px.srvcs.tumblr.com tracking domain
     return false
   end
+
+  if ignored[url] ~= true then
+    return false
+  end
+
   if string.match(url, "^https?://www.tumblr.com/oembed/1.0")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.pnj")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.gif")
