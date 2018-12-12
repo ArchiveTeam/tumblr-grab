@@ -59,6 +59,8 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://assets%.tumblr%.com/client")
   or string.match(url, "^https?://static%.tumblr%.com/[%u%p%l]+")
   or string.match(url, "ios%-app://")
+  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/.*/amp$")
+  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/rss$")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/reblog")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/.*%?route=") then
     return false
@@ -119,8 +121,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     -- Ignore px.srvcs.tumblr.com tracking domain
     return false
   end
-
-  if string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.pnj")
+  if string.match(url, "^https?://www.tumblr.com/oembed/1.0")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.pnj")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_64%.gif")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_16%.pnj")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_16%.gif") then
