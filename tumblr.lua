@@ -287,9 +287,6 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     or string.match(url["host"], "www%.tumblr%.com")
     or string.match(url["host"], "counter%.website%-hit%-counters%.com")
     or string.match(url["url"], "^https?://".. item_value .."%.tumblr%.com/services")
-    or string.match(url["host"], "adult%-anal%-party%.com")
-    or string.match(url["host"], "wielkie%-hu215%.metal%-invest%.pl")
-    or string.match(url["host"], "de05%.cdn%.z5o%.net")
     or string.match(url["url"], "%.[pjg][npi][ggf]$") then
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Skipping.\n")
       tries = 0
