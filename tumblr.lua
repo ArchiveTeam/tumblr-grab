@@ -49,9 +49,7 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/%p+%d+")
   or string.match(url, "^https?://assets%.tumblr%.com/%p+%d+")
   or string.match(url, "^https?://static%.tumblr%.com/%p+%d+")
-  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.pnj")
-  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.png")
-  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.gif")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.[pjg][npi][jgf]$")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/post/")
   or string.match(url, "^https?://assets%.tumblr%.com/archive")
   or string.match(url, "^https?://assets%.tumblr%.com/filter%-by")
@@ -137,9 +135,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
 
   if string.match(url, "^https?://www.tumblr.com/oembed/1.0")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/post/%d+/[^/]+/embed$")
-  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.jpg")
-  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.pnj")
-  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.gif") then
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.[pjg][npi][jgf]$") then
     -- Ignore small avatars (16x16 and 64x64)
     return false
   end
