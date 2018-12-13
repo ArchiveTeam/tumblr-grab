@@ -117,8 +117,7 @@ end
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
   local url = urlpos["url"]["url"]
   local html = urlpos["link_expect_html"]
-  
-  
+ 
   if string.find(url, "code%.jquery%.com") then
     -- Ignore code.jquery.com
     return false
@@ -137,6 +136,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   if string.find(url, "/:year") or 
     string.find(url, "/:month") or 
     string.find(url, "/:id") or 
+    string.find(url, "/:page") or 
     string.find(url, "/:blog_not_found")
   then 
     return false
