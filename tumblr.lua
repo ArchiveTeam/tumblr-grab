@@ -60,7 +60,7 @@ allowed = function(url, parenturl)
   or string.match(url, "ios%-app://")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/notes")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/post/%d+/[^/]+/amp$")
-  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/post/%d/[^/]+/embed$")
+  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/post/%d+/[^/]+/embed$")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/rss$")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/reblog")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/.*%?route=")
@@ -136,7 +136,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   end
 
   if string.match(url, "^https?://www.tumblr.com/oembed/1.0")
-  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/post/%d/[^/]+/embed$")
+  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/post/%d+/[^/]+/embed$")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.jpg")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.pnj")
   or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com/avatar_[a-zA-Z0-9]+_%d%d%.gif") then
