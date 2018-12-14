@@ -1,0 +1,22 @@
+# HTTP Cookie File for tumblr.com by Genuinous @genuinous.
+# To download cookies for this tab click here, or download all cookies.
+# Usage Examples:
+#   1) wget -x --load-cookies cookies.txt "https://www.tumblr.com/dashboard"
+#   2) curl --cookie cookies.txt "https://www.tumblr.com/dashboard"
+#   3) aria2c --load-cookies cookies.txt "https://www.tumblr.com/dashboard"
+#
+.tumblr.com	TRUE	/	FALSE	1576331317	rxx	8mkk2vbj5lc.1chj3wwq&v=1
+www.tumblr.com	FALSE	/	FALSE	1545400064	nts	false
+www.tumblr.com	FALSE	/	FALSE	0	capture	XCP8nIPmTGVavVNVwBxr4jw6N3k
+.srvcs.tumblr.com	TRUE	/	FALSE	1552144927	anon_id	CJLLGEIYVTTEYLUVTWWFBXVMRWISCQPK
+.tumblr.com	TRUE	/	FALSE	1860115287	tmgioct	5c131857c1f5540040558190
+www.tumblr.com	FALSE	/	FALSE	1544881712	devicePixelRatio	1
+www.tumblr.com	FALSE	/	TRUE	1547387262	pfp	wrHTKYYl674TeT1NS5kDdyVBbkYwWZbGTWk1CzJG
+www.tumblr.com	FALSE	/	TRUE	1547387262	pfs	6bj0d0HWGNnzqZQd4yIUBjLTOs4
+www.tumblr.com	FALSE	/	TRUE	1547387262	pfe	1552571264
+www.tumblr.com	FALSE	/	TRUE	1547387262	pfu	129638917
+.tumblr.com	TRUE	/	TRUE	1544881662	pfx	74153291d0e284297f401d3ed892b401034d2244c16cd195f1055f93b5a0122f%230%231554329819
+.tumblr.com	TRUE	/	FALSE	1576331262	language	%2Cen_US
+.tumblr.com	TRUE	/	FALSE	1576331262	logged_in	1
+www.tumblr.com	FALSE	/	FALSE	1544881712	documentWidth	1903
+.tumblr.com	TRUE	/	FALSE	1576331359	pfg	097a665eba2ada661355ac76a9f84ed76ce899c3b47ca465680fefdafd04b9b3%23%7B%22gdpr_is_acceptable_age%22%3A1%2C%22exp%22%3A1576331360%2C%22vc%22%3A%22%22%7D%236652846222
