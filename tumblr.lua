@@ -22,6 +22,7 @@ local concat = "^https?://".. item_value .. "%.tumblr%.com/?[^/]*/?[^/]*/?[^/]*/
 local video = "^https?://www%.tumblr%.com/video/".. item_value .. "/?.*/?.*/?.*"
 
 local discovered_blogs = {}
+local discovered_media = {}
 
 for ignore in io.open("ignore-list", "r"):lines() do
   downloaded[ignore] = true
@@ -72,8 +73,11 @@ allowed = function(url, parenturl)
     if blogname ~= item_value then
       discovered_blogs[blogname] = true
     end
+  elseif string.match(url, "^https?://[0-9a-z]+%.media%.tumblr%.com")
+      or string.match(url, "^https?://vtt%.tumblr%.com") then
+    discovered_media[url] = true
   end
-  
+
   if string.match(url, concat) then
     if parenturl ~= nil then
       if string.match(parenturl, concat) or string.match(url, "^https?://www%.tumblr%.com/") then
@@ -320,6 +324,14 @@ wget.callbacks.finish = function(start_time, end_time, wall_time, numurls, total
   if item_type == "tumblr-blog" then
     for blog, _ in pairs(discovered_blogs) do
       file:write("tumblr-blog:" .. blog .. "\n")
+    end
+  end
+  file:close()
+
+  local file = io.open(item_dir..'/'..warc_file_base..'_media.txt', 'w')
+  if item_type == "tumblr-blog" then
+    for url, _ in pairs(discovered_media) do
+      file:write(url .. "\n")
     end
   end
   file:close()
