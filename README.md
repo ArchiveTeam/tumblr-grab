@@ -111,6 +111,15 @@ Ensure that you have the Arch equivalent of bzip2 installed as well.
 5. `useradd --system --group users --shell /bin/bash --create-home archiveteam`
 6. `screen su -c "cd /home/archiveteam/tumblr-grab/; run-pipeline pipeline.py --concurrent 2 --address '127.0.0.1' YOURNICKHERE" archiveteam`
 
+### For Alpine Linux:
+
+    apk add lua5.1 git python-dev bzip2 bash rsync gcc libc-dev lua5.1-dev gnutls-dev autoconf flex make
+    python -m ensurepip
+    pip install -U seesaw
+    git clone https://github.com/ArchiveTeam/tumblr-grab
+    cd tumblr-grab; ./get-wget-lua.sh
+    run-pipeline pipeline.py --concurrent 2 --address '127.0.0.1' YOURNICKHERE
+
 ### For FreeBSD:
 
 Honestly, I have no idea. `./get-wget-lua.sh` supposedly doesn't work due to differences in the `tar` that ships with FreeBSD. Another problem is the apparent absence of Lua 5.1 development headers. If you figure this out, please do let us know on IRC (irc.efnet.org #archiveteam).
