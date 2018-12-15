@@ -7,7 +7,7 @@ import random
 from seesaw.config import realize, NumberConfigValue
 from seesaw.externalprocess import ExternalProcess
 from seesaw.item import ItemInterpolation, ItemValue
-from seesaw.task import SimpleTask, LimitConcurrent
+from seesaw.task import Task, SimpleTask, LimitConcurrent
 from seesaw.tracker import GetItemFromTracker, PrepareStatsForTracker, \
     UploadWithTracker, SendDoneToTracker
 import shutil
@@ -22,6 +22,9 @@ from seesaw.externalprocess import WgetDownload
 from seesaw.pipeline import Pipeline
 from seesaw.project import Project
 from seesaw.util import find_executable
+
+import functools
+from tornado.httpclient import AsyncHTTPClient, HTTPRequest
 
 
 # check the seesaw version
@@ -61,9 +64,9 @@ if not WGET_LUA:
 
 VERSION = '20181213.04'
 USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html; ArchiveTeam)'
+BROWSER_UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
-
 
 ###########################################################################
 # This section defines project-specific tasks.
@@ -165,9 +168,14 @@ def stats_id_function(item):
 
 class WgetArgs(object):
     def realize(self, item):
+        if item['tumblr_requires_login']:
+            user_agent = USER_AGENT
+        else:
+            user_agent = BROWSER_UA
+
         wget_args = [
             WGET_LUA,
-            '-U', USER_AGENT,
+            '-U', user_agent,
             '-nv',
             '--no-cookies',
             '--lua-script', 'tumblr.lua',
@@ -229,11 +237,51 @@ project = Project(
     '''
 )
 
+class CheckForLogin(Task):
+    def __init__(self, user_agent=BROWSER_UA):
+        Task.__init__(self, "CheckForLogin")
+        self.http_client = AsyncHTTPClient()
+        self.user_agent = user_agent
+
+    def enqueue(self, item):
+        self.start_item(item)
+        item.log_output("Starting %s for %s\n" % (self, item.description()))
+        self.fetch_page(item)
+
+    def fetch_page(self, item, scheme='http'):
+        self.http_client.fetch(
+            HTTPRequest(
+                self.blog_url(item, scheme),
+                method="GET",
+                user_agent=self.user_agent,
+                follow_redirects=False,
+                ),
+            functools.partial(self.handle_response, item))
+
+    def handle_response(self, item, response):
+        item['tumblr_requires_login'] = False
+        if response.code == 302:
+            location = response.headers['Location']
+            # follow the http -> https redirect for pages that require login
+            if location.startswith(self.blog_url(item, scheme='https')):
+                self.fetch_page(item, scheme='https')
+                return
+            elif location.startswith('https://www.tumblr.com/safe-mode'):
+                item['tumblr_requires_login'] = True
+
+        self.complete_item(item)
+
+    @staticmethod
+    def blog_url(item, scheme='http'):
+        host = item['item_name'].split(':')[1]
+        return "{}://{}".format(scheme, host)
+
 pipeline = Pipeline(
     CheckIP(),
     GetItemFromTracker('http://%s/%s' % (TRACKER_HOST, TRACKER_ID), downloader,
         VERSION),
     PrepareDirectories(warc_prefix='tumblr'),
+    CheckForLogin(),
     WgetDownload(
         WgetArgs(),
         max_tries=2,
