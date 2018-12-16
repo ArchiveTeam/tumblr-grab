@@ -125,6 +125,7 @@ class PrepareDirectories(SimpleTask):
 
         open('%(item_dir)s/%(warc_file_base)s.warc.gz' % item, 'w').close()
         open('%(item_dir)s/%(warc_file_base)s_data.txt' % item, 'w').close()
+        open('%(item_dir)s/%(warc_file_base)s_media.txt' % item, 'w').close()
 
 
 class MoveFiles(SimpleTask):
@@ -140,6 +141,8 @@ class MoveFiles(SimpleTask):
               '%(data_dir)s/%(warc_file_base)s.warc.gz' % item)
         os.rename('%(item_dir)s/%(warc_file_base)s_data.txt' % item,
               '%(data_dir)s/%(warc_file_base)s_data.txt' % item)
+        os.rename('%(item_dir)s/%(warc_file_base)s_media.txt' % item,
+              '%(data_dir)s/%(warc_file_base)s_media.txt' % item)
 
         shutil.rmtree('%(item_dir)s' % item)
 
@@ -264,6 +267,7 @@ pipeline = Pipeline(
             version=VERSION,
             files=[
                 ItemInterpolation('%(data_dir)s/%(warc_file_base)s_data.txt'),
+                ItemInterpolation('%(data_dir)s/%(warc_file_base)s_media.txt'),
                 ItemInterpolation('%(data_dir)s/%(warc_file_base)s.warc.gz')
             ],
             rsync_target_source_path=ItemInterpolation('%(data_dir)s/'),

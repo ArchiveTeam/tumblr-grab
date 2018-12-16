@@ -23,6 +23,8 @@ local video = "^https?://www%.tumblr%.com/video/".. item_value .. "/?.*/?.*/?.*"
 
 local discovered_blogs = {}
 
+local media_file = io.open(item_dir..'/'..warc_file_base..'_media.txt', 'w')
+
 for ignore in io.open("ignore-list", "r"):lines() do
   downloaded[ignore] = true
 end
@@ -36,6 +38,37 @@ read_file = function(file)
   else
     return ""
   end
+end
+
+should_add_media = function(url, parenturl)
+  if string.match(url, video) 
+  or string.match(url, "vtt%.tumblr%.com") then
+    return true
+  end
+  
+  if string.match(url, "^https?://assets%.tumblr%.com")
+  or string.match(url, "^https?://static%.tumblr%.com")
+  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") then
+    if parenturl ~= nil then
+      if string.match(parenturl, concat) then
+        return true
+      end
+    else
+      return true
+    end
+  end
+  
+  if string.match(url, "^https?://[a-z]+%.media%.tumblr%.com") then
+    if parenturl ~= nil then
+      if string.match(parenturl, "^https?://www%.tumblr%.com") then
+        return true
+      end
+    else
+      return true
+    end
+  end
+  
+  return false
 end
 
 allowed = function(url, parenturl)
@@ -85,30 +118,9 @@ allowed = function(url, parenturl)
     return true
   end
   
-  if string.match(url, video) then
-    return true
-  end
-  
-  if string.match(url, "^https?://assets%.tumblr%.com")
-  or string.match(url, "^https?://static%.tumblr%.com")
-  or string.match(url, "^https?://[0-9]+%.media%.tumblr%.com") then
-    if parenturl ~= nil then
-      if string.match(parenturl, concat) then
-        return true
-      end
-    else
-      return true
-    end
-  end
-  
-  if string.match(url, "^https?://[a-z]+%.media%.tumblr%.com") then
-    if parenturl ~= nil then
-      if string.match(parenturl, "^https?://www%.tumblr%.com") then
-        return true
-      end
-    else
-      return true
-    end
+  if should_add_media(url, parenturl) then
+    media_file:write(url .. "\n")
+    return false
   end
   
   return false
@@ -152,6 +164,11 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   
   if (downloaded[url] ~= true and addedtolist[url] ~= true)
   and (allowed(url, parent["url"]) or html == 0) then
+    if should_add_media(url, parent["url"]) then
+      -- already added to media list in allowed, don't need to add it again,
+      -- but must return false here
+      return false
+    end
     addedtolist[url] = true
     return true
   end
@@ -335,6 +352,7 @@ wget.callbacks.finish = function(start_time, end_time, wall_time, numurls, total
     end
   end
   file:close()
+  media_file:close()
 end
 
 wget.callbacks.before_exit = function(exit_status, exit_status_string)
