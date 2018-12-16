@@ -265,7 +265,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
         return wget.actions.EXIT
       end
     else
-      local backoff = math.floor(math.pow(2, tries))
+      local backoff = math.floor(math.pow(2, tries)) -- math.pow returns a float, math.floor turns it into an int so the sleep cmd gets an int
       os.execute("sleep " .. backoff)
       tries = tries + 1
       return wget.actions.CONTINUE
@@ -298,7 +298,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
           return wget.actions.EXIT
         end
       else
-        local backoff = math.floor(math.pow(2, tries))
+        local backoff = math.floor(math.pow(2, tries)) -- math.pow returns a float, math.floor turns it into an int so the sleep cmd gets an int
         os.execute("sleep " .. backoff)
         tries = tries + 1
         return wget.actions.CONTINUE
