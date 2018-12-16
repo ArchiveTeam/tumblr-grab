@@ -96,7 +96,14 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/reblog")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/.*%?route=")
  -- or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/likes/page/%d%d%d")
-  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/[^/]+%%") then
+  or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/[^/]+%%")
+  or string.find(url, "/:year")
+  or string.find(url, "/:month")
+  or string.find(url, "/:id")
+  or string.find(url, "/:page")
+  or string.find(url, "/:blog_not_found")
+  or string.find(url, "/:tag")
+  then
     return false
   end
 
