@@ -99,6 +99,10 @@ allowed = function(url, parenturl)
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/.*%?route=")
  -- or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/likes/page/%d%d%d")
   or string.match(url, "^https?://" .. item_value .. "%.tumblr%.com/[^/]+%%")
+  --[[
+  exclude /: template urls when discovering urls because for some reason wget-lua 
+  does not properly call download_child(_p) when deciding whether to download these
+  ]]
   or string.find(url, "/:year")
   or string.find(url, "/:month")
   or string.find(url, "/:id")
