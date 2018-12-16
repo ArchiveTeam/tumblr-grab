@@ -179,7 +179,7 @@ end
 wget.callbacks.get_urls = function(file, url, is_css, iri)
   local urls = {}
   local html = nil
-
+  
   downloaded[url] = true
   local function check(urla)
     local origurl = url
@@ -260,6 +260,14 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   io.stdout:write(url_count .. "=" .. status_code .. " " .. url["url"] .. "  \n")
   io.stdout:flush()
 
+  if (status_code >= 300 and status_code <= 399) then
+    local newloc = http_stat["newloc"]
+    if string.match(newloc, "https?://www%.tumblr%.com/privacy/consent")
+    or string.match(newloc, "https?://www%.tumblr%.com/safe-mode") then
+      abortgrab = true
+    end
+  end
+  
   if (status_code >= 200 and status_code <= 399) then
     downloaded[url["url"]] = true
     downloaded[string.gsub(url["url"], "https?://", "http://")] = true
