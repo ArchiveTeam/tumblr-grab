@@ -1,10 +1,11 @@
 # Frequently Asked Questions
 
-#### Why is the tracker stopped? Is my warrior going to receive any new work?
-- The tracker is stopped because all existing warriors got their IP addresses banned when using the previous crawl script.
+#### Why was the tracker stopped? Is my warrior going to receive any new work?
+- The tracker was stopped because all existing warriors got their IP addresses banned when using the previous crawl script.
   A lot of bad data ("banned" error pages etc.) also got archived upstream on the staging server.
-  So until a new script is formed and proven itself and the bad data is pruned from the tracker,
-  the tracker is paused for now so as to not cause any more problems.
+  So until a new script was formed and proven itself and the bad data was pruned from the tracker,
+  the tracker was paused so as to not cause any more problems.
+- The tracker has been resumed.
   
 #### What is the Archive Team currently doing?
  - Working on Frontend (Warrior Queue) and new crawlers.
