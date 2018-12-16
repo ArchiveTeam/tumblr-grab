@@ -22,12 +22,13 @@
      can make a local backup of posts (XML default), video, audio and images. Uses APIv2
  - Windows:
    * [__TumblThree__](https://www.jzab.de/content/tumblthree) Can archive an entire blog by feeding it an URL, including asks, text posts and reblogs to XML format and can download all images. Downloadable here. Windows only until the dev implements mono support.
+ - Note that the data produced by these programs is incompatible with Archive Team's format and thus cannot be used by the official project. These are usable for your own backups only.
  
 #### Should we submit SFW blogs? after the NSFW are nuked maybe
 - Only if you believe their data is at risk.
 
 #### What time/date will the blogs be deleted? 
-- Starting Dec 17
+- Starting Dec 17th
 - According to some reports, the deletion has already begun
 
 #### Who got banned? How?
@@ -36,18 +37,22 @@
 - Everyone got banned, regardless of how much or little they had crawled, and regardless of whether they used a residential or a datacenter IP.
 
 #### Can I run my own crawler and have it appear in the Wayback Machine or Internet Archive?
-- Yes, use the official warrior from #tumbledown on EFnet
+- Yes, use the official warrior from [#tumbledown on EFnet](http://chat.efnet.org:9090/?channels=%23tumbledown) (IRC)
 - Just ask where to find it there
 
 #### Follow up: I already have a HDD full of data, what should I do with it?
 - If it's from an uncompleted warrior job, delete it
-- If not, come to #tumbledown on IRC EFnet
+- If not, come to [#tumbledown on EFnet](http://chat.efnet.org:9090/?channels=%23tumbledown) (IRC)
 
 #### What methods work for crawling and what don't?
    * Login- and API-based crawling has been reported to still work regardless of the previous IP ban, but API-based crawling is not compatible
      with the Archive Team's objective. You can still do it for yourself, though.
-   * Apart from that, only getting a new IP address somehow.
+   * Apart from that, if you're banned, only getting a new IP address somehow.
    * If you are on a residential connection, restarting your router *might* assign you a new IP address from your ISP's pool.
+
+#### What does the Archive Team need the most in this project?
+- IP addresses from different warriors around the world.
+- Every (HTML) crawler will get rate limited quite quickly, so the number of different connections is much more valuable than huge bandwidth if you cannot spread it over multiple IP addresses.
 
 #### Would VPNs help?
 - Data integrity is a very high priority for the Archive Team so use of VPNs with the official crawler is discouraged.
@@ -73,23 +78,26 @@ Other mass crawlers, in use at the moment:
   - You can't view the output in the browser yet
   - A second script is added later to output HTML
 
-Overly Technical Details:
+## Overly Technical Details:
 
-#### What about IPv6 /64 round robin
-- There's only three endpoins with IPv6.  www.tumblr.com and api.tumblr.com and api-http2.tumblr.com
-- Which is enough. api-http2.tumblr.com ships all the metadata
-- IP bans aren't enforced on CDN URLs
+#### What about IPv6 /64 round robin?
+- There's only three endpoins with IPv6. www.tumblr.com and api.tumblr.com and api-http2.tumblr.com
+- api-http2.tumblr.com can be used for API-based crawling and includes all metadata, but this is not compatible with Archive Team's format.
+- To summarize, the format Archive Team uses (full HTML dumps) cannot be reached via IPv6.
+- IP bans aren't enforced on CDN URLs.
 
-#### Why is the script using user-agent <xy>
-- Primarily, because EU warrior were receiving a GDPR opt-in page. Using the Googlebot UA avoided this
-- Tumblr treats all bots equally
-- The bans are IP bans, changing the user agent neither helps us avoid them nor lets us bypass them
+#### Why is the script using user-agent `<xy>`?
+- Primarily because warriors in the EU were receiving a GDPR opt-in page. Using the Googlebot UA avoided this.
+- The bans are IP bans, changing the user agent neither helps us avoid them nor lets us bypass them.
+- Tumblr treats all bots equally.
 
 #### Follow up, what about rotating random bot UA's?
 - Most likely not needed, if Tumblr were banning by UA, it'd happen a lot sooner
 - You can submit PRs though if you want
-- Don't rotate UAs within the same crawl session/machine/IP address, that is highly suspicious behavior and might get your session flagged.
+- Note: Don't rotate UAs within the same crawl session/machine/IP address, that is highly suspicious behavior and might get your session flagged.
 
-#### Can we use GCP, EC2 etc.
-- Yes
-- Their IPs could be banned already
+#### Can we use GCP, EC2 etc?
+- Absolutely, but their IP addresses could be banned already, so it's a gamble.
+- Some of the biggest players that were hit in the first ban wave were using DigitalOcean.
+- AWS with elastic IPs seems mostly unexplored so far, also smaller ISPs might fare better than the big ones.
+- Please share your experiences on [#tumbledown on EFnet](http://chat.efnet.org:9090/?channels=%23tumbledown)
