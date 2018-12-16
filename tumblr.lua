@@ -255,15 +255,18 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     or status_code > 404 then
     io.stdout:write("Server returned "..http_stat.statcode.." ("..err.."). Sleeping.\n")
     io.stdout:flush()
-    os.execute("sleep 60")
-    tries = tries + 1
-    if tries >= 5 then
+    local maxtries = 10 -- default: bail out after 10 retires or 2047 seconds (2^11 or 1+2+4+8+16+32+64+128+256+512+1024)
+    if string.match(url["url"], "_%d+.[pjg][npi][ggf]$")
+    or string.match(url["url"], "%.[pjg][npi][ggf]$") then
+      maxtries = 8 -- we don't care that much about errors on media urls and skip those earlier: after 255 seconds (2^8 or 1+2+4+8+16+32+64+128)
+    end
+    if tries > maxtries then
       io.stdout:write("\nI give up...\n")
       io.stdout:flush()
       tries = 0
       if string.match(url["url"], "_%d+.[pjg][npi][ggf]$")
       or string.match(url["url"], "%.[pjg][npi][ggf]$") then
-        return wget.actions.EXIT
+        return wget.actions.EXIT -- just skip this url instead of aborting the entire item when we hit a bad media url
       end
       if allowed(url["url"], nil) then
         return wget.actions.ABORT
@@ -271,6 +274,9 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
         return wget.actions.EXIT
       end
     else
+      local backoff = math.floor(math.pow(2, tries)) -- math.pow returns a float, math.floor turns it into an int so the sleep cmd gets an int
+      os.execute("sleep " .. backoff)
+      tries = tries + 1
       return wget.actions.CONTINUE
     end
   end
@@ -291,9 +297,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     else
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Sleeping.\n")
       io.stdout:flush()
-      os.execute("sleep 1")
-      tries = tries + 1
-      if tries >= 5 then
+      if tries > 10 then -- bail out after 10 retries or 2047 seconds (2^11 or 1+2+4+8+16+32+64+128+256+512+1024)
         io.stdout:write("\nI give up...\n")
         io.stdout:flush()
         tries = 0
@@ -303,6 +307,9 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
           return wget.actions.EXIT
         end
       else
+        local backoff = math.floor(math.pow(2, tries)) -- math.pow returns a float, math.floor turns it into an int so the sleep cmd gets an int
+        os.execute("sleep " .. backoff)
+        tries = tries + 1
         return wget.actions.CONTINUE
       end
     end
