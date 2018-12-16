@@ -3,7 +3,7 @@ tumblr-grab
 
 More information about the archiving project can be found on the ArchiveTeam wiki: [tumblr](http://archiveteam.org/index.php?title=tumblr)
 
-[Frequently Asked Questions](faq.md)
+[Frequently Asked Questions](FAQ.md)
 
 Setup instructions
 =========================
