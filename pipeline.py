@@ -17,10 +17,22 @@ import sys
 import time
 import string
 
+sys.path.insert(0, os.getcwd())
+
+import warcio
+from warcio.archiveiterator import ArchiveIterator
+from warcio.warcwriter import WARCWriter
+
+if not warcio.__file__ == os.path.join(os.getcwd(), 'warcio', '__init__.pyc'):
+    print('Warcio was not imported correctly.')
+    print('Location: ' + warcio.__file__ + '.')
+    sys.exit(1)
+
 try:
-    import warc
-except:
-    raise Exception("Please install warc with 'pip install warc --upgrade'.")
+    import requests
+except ImportError:
+    print('Please install or update the requests module.')
+    sys.exit(1)
 
 import seesaw
 from seesaw.externalprocess import WgetDownload
@@ -57,6 +69,18 @@ WGET_LUA = find_executable(
 if not WGET_LUA:
     raise Exception('No usable Wget+Lua found.')
 
+PYTHON2_EXE = find_executable(
+    "Python",
+    re.compile(r"^Python 2\."),
+    [
+        "python",
+        "python2",
+    ]
+)
+
+if not PYTHON2_EXE:
+    raise Exception("No usable Python found.")
+
 
 ###########################################################################
 # The version number of this pipeline definition.
@@ -64,7 +88,7 @@ if not WGET_LUA:
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
 
-VERSION = '20181216.01'
+VERSION = '20181216.02'
 USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -132,68 +156,6 @@ class PrepareDirectories(SimpleTask):
         open('%(item_dir)s/%(warc_file_base)s_data.txt' % item, 'w').close()
 
 
-class Deduplicate(SimpleTask):
-    def __init__(self):
-        SimpleTask.__init__(self, "Deduplicate")
-        
-    def process(self, item):
-        hashes = {}
-        input_filename = "%(item_dir)s/%(warc_file_base)s.warc.gz" % item
-        output_filename = output_filename = "%(item_dir)s/%(warc_file_base)s-deduplicated.warc.gz" % item
-        
-        warc_input = warc.WARCFile(input_filename)
-        warc_input_size = os.path.getsize(input_filename)
-        warc_output = warc.WARCFile(output_filename, 'w')
-        
-        info_record = warc_input.read_record()
-        info_record.header['WARC-Filename'] = "%(warc_file_base)s-deduplicated.warc.gz" % item
-        del info_record.header['WARC-Block-Digest']
-        warc_output.write_record(warc.WARCRecord(
-            payload=info_record.payload.read(),
-            header=info.record_header))
-            
-        while warc_input_size > warc_input.tell():
-            for record in warc_input:
-                if record.type == 'response':
-                    hash_ = record.header.get('WARC-Payload-Digest'),split(':', 1)[1]
-                    if hash_ in hashes:
-                        headers = []
-                        payload_ = record.payload.read()
-                        for line in payload_.splitlines():
-                            if line in ['\r\n', '\n', '']:
-                                break
-                            headers.append(line.strip())
-                        payload = '\r\n'.join(headers) + '\r\n'*2
-                        if not ('Content-Length: 0' in payload or \
-                            'content-length: 0' in payload:
-                            record.header['Content-Length'] = str(len(payload))
-                            record.header['WARC-Refers-To'] = hashes[hash_][0]
-                            record.header['WARC-Refers-To-Date'] = hashes[hash_][1]
-                            record.header['WARC-Refers-To-Target-URI'] = \
-                                hashes[hash_][2]
-                            record.header['WARC-Type'] = 'revisit'
-                            record.header['WARC-Truncated'] = 'length'
-                            record.header['WARC-Profile'] = 'http://netpreserve' \
-                                '.org/warc/1.0/revisit/identical-payload-digest'
-                            del record.header['WARC-Block-Digest']
-                            record = warc.WARCRecord(header=record.header,
-                                payload=payload, defaults=False)
-                        else:
-                            record = warc.WARCRecord(header=record.header,
-                                payload=payload_, defaults=False)
-                    else:
-                        hashes[hash_] = (record.header.get('WARC-Record-ID'),
-                            record.header.get('WARC-Date'),
-                            record.header.get('WARC-Target-URI'))
-                        record = warc.WARCRecord(
-                            header=record.header,
-                            payload=record.payload.read(), defaults=False)
-                else:
-                    record = warc.WARCRecord(header=record.header,
-                        payload=record.payload.read(), defaults=False)
-                warc_output.write_record(record)
-
-
 class MoveFiles(SimpleTask):
     def __init__(self):
         SimpleTask.__init__(self, 'MoveFiles')
@@ -203,12 +165,30 @@ class MoveFiles(SimpleTask):
         if os.path.exists('%(item_dir)s/%(warc_file_base)s.warc' % item):
             raise Exception('Please compile wget with zlib support!')
 
-        os.rename('%(item_dir)s/%(warc_file_base)s.warc.gz' % item,
-              '%(data_dir)s/%(warc_file_base)s.warc.gz' % item)
+        os.rename('%(item_dir)s/%(warc_file_base)s-deduplicated.warc.gz' % item,
+              '%(data_dir)s/%(warc_file_base)s-deduplicated.warc.gz' % item)
         os.rename('%(item_dir)s/%(warc_file_base)s_data.txt' % item,
               '%(data_dir)s/%(warc_file_base)s_data.txt' % item)
 
         shutil.rmtree('%(item_dir)s' % item)
+
+class DeduplicateWarcExtProc(ExternalProcess):
+    def __init__(self, args):
+        ExternalProcess.__init__(
+            self, "DeduplicateWarcExtProc", args=args, accept_on_exit_code=[0], 
+            retry_on_exit_code=[2])
+
+
+class DeduplicateWarcExtProcArgs(object):
+    def realize(self, item):
+        dedup_args = [
+            PYTHON2_EXE,
+            '-u', # no output buffering
+            'dedupe.py',
+            '%(item_dir)s/%(warc_file_base)s.warc.gz' % item,
+            '%(item_dir)s/%(warc_file_base)s-deduplicated.warc.gz' % item
+        ]
+        return realize(dedup_args, item)
 
 
 def get_hash(filename):
@@ -312,7 +292,14 @@ pipeline = Pipeline(
             'warc_file_base': ItemValue('warc_file_base'),
         }
     ),
-    Deduplicate(),
+    LimitConcurrent(
+        NumberConfigValue(min=1, max=20, default="1",
+            name="shared:dedupe_threads", title="Deduplicate threads",
+            description="The maximum number of concurrent dedupes."),
+        DeduplicateWarcExtProc(
+            DeduplicateWarcExtProcArgs()
+        )
+    ),
     PrepareStatsForTracker(
         defaults={'downloader': downloader, 'version': VERSION},
         file_groups={
