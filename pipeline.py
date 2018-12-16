@@ -59,8 +59,8 @@ if not WGET_LUA:
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
 
-VERSION = '20181216.05'
-USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html; ArchiveTeam)'
+VERSION = '20181216.06'
+USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
 
@@ -169,7 +169,7 @@ class WgetArgs(object):
             WGET_LUA,
             '-U', USER_AGENT,
             '-nv',
-            '--no-cookies',
+            '--header', 'Cookie: rxx=5xsz8gpps7w.1cxbbha8&v=1; _ga=GA1.2.67023728.1544887148; _gid=GA1.2.55111282.1544887148; __utma=189990958.67023728.1544887148.1544887148.1544887148.1; __utmb=189990958.0.10.1544887148; __utmc=189990958; __utmz=189990958.1544887148.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); language=%2Cen_US; logged_in=1; pfx=025a404c8fe0a59b8c35f218ec03d27834e8b87ef79b414c0872edf4ff0e146c%230%234099695469; pfg=253dab60b55590b025d9ae175a9442d5895d72b2f7aeb68188ca352cc075242c%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576423244%2C%22vc%22%3A%22%22%7D%230120119809; tmgioct=5c151bcc4067d10993384260',
             '--lua-script', 'tumblr.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
