@@ -133,11 +133,12 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     return false
   end
 
-  if string.find(url, "/:year") or 
-    string.find(url, "/:month") or 
-    string.find(url, "/:id") or 
-    string.find(url, "/:page") or 
-    string.find(url, "/:blog_not_found")
+  if string.find(url, "/:year")
+  or string.find(url, "/:month")
+  or string.find(url, "/:id")
+  or string.find(url, "/:page")
+  or string.find(url, "/:blog_not_found")
+  or string.find(url, "/:tag")
   then 
     return false
   end
