@@ -226,7 +226,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
           or string.match(url, "^https?://vtt%.tumblr%.com"))
   and allowed(url, nil) then
     html = read_file(file)
-    if string.match(html, '<title>Request denied.</title>') then
+    if string.match(html, '<title>Request denied%.</title>') then
       abortgrab = true
       return urls
     end
