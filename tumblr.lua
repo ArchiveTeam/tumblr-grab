@@ -284,7 +284,11 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     end
   end
   
-  if status_code == 403 or status_code == 400 or status_code == 0 then
+  if status_code == 403 -- banned
+  or status_code == 400 -- ?
+  or status_code == 429 -- rate limit exceeded
+  or status_code == 0 -- download error
+  then
     --if string.match(url["host"], "")
     if string.match(url["host"], "assets%.tumblr%.com")
     or string.match(url["host"], "static%.tumblr%.com")
