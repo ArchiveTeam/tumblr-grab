@@ -113,7 +113,7 @@ Ensure that you have the Arch equivalent of bzip2 installed as well.
 
 ### For Alpine Linux:
 
-    apk add lua5.1 git python-dev bzip2 bash rsync gcc libc-dev lua5.1-dev gnutls-dev autoconf flex make
+    apk add lua5.1 git python bzip2 bash rsync gcc libc-dev lua5.1-dev zlib-dev gnutls-dev autoconf flex make
     python -m ensurepip
     pip install -U seesaw
     git clone https://github.com/ArchiveTeam/tumblr-grab
