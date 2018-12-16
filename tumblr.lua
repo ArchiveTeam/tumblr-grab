@@ -205,7 +205,9 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       check(string.match(url, "^(https?://.+/)")..newurl)
     end
   end
-  if allowed(url, nil) then
+  if not (string.match(url, "^https?://[0-9a-z]+%.media%.tumblr%.com")
+          or string.match(url, "^https?://vtt%.tumblr%.com"))
+  and allowed(url, nil) then
     html = read_file(file)
     if string.match(html, '<title>Request denied.</title>') then
       abortgrab = true
