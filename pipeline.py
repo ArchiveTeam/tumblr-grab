@@ -59,7 +59,7 @@ if not WGET_LUA:
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
 
-VERSION = '20181216.06'
+VERSION = '20181216.07'
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
