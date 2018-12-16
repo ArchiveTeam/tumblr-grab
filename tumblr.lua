@@ -251,9 +251,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     or status_code > 404 then
     io.stdout:write("Server returned "..http_stat.statcode.." ("..err.."). Sleeping.\n")
     io.stdout:flush()
-    os.execute("sleep 60")
-    tries = tries + 1
-    if tries >= 5 then
+    if tries > 10 then -- bail out after 2047 seconds (1+2+4+8+16+32+64+128+256+512+1024)
       io.stdout:write("\nI give up...\n")
       io.stdout:flush()
       tries = 0
@@ -267,6 +265,9 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
         return wget.actions.EXIT
       end
     else
+      local backoff = math.floor(math.pow(2, tries))
+      os.execute("sleep " .. backoff)
+      tries = tries + 1
       return wget.actions.CONTINUE
     end
   end
@@ -287,9 +288,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     else
       io.stdout:write("Server returned " ..http_stat.statcode.." ("..err.."). Sleeping.\n")
       io.stdout:flush()
-      os.execute("sleep 1")
-      tries = tries + 1
-      if tries >= 5 then
+      if tries >= 10 then -- bail out after 2047 seconds (1+2+4+8+16+32+64+128+256+512+1024)
         io.stdout:write("\nI give up...\n")
         io.stdout:flush()
         tries = 0
@@ -299,6 +298,9 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
           return wget.actions.EXIT
         end
       else
+        local backoff = math.floor(math.pow(2, tries))
+        os.execute("sleep " .. backoff)
+        tries = tries + 1
         return wget.actions.CONTINUE
       end
     end
