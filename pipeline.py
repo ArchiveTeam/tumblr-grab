@@ -60,7 +60,7 @@ if not WGET_LUA:
 # It will be added to the WARC files and reported to the tracker.
 
 VERSION = '20181216.11'
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'
+USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
 
@@ -172,7 +172,7 @@ class WgetArgs(object):
             WGET_LUA,
             '-U', USER_AGENT,
             '-nv',
-            '--header', 'Cookie: rxx=w9clogg4q1.1cyuzkvb&v=1; _ga=GA1.2.793667792.1544980653; _gid=GA1.2.17435551.1544980653; __utma=189990958.793667792.1544980653.1544980654.1544980654.1; __utmb=189990958.0.10.1544980654; __utmc=189990958; __utmz=189990958.1544980654.1.1.utmcsr=staff.tumblr.com|utmccn=(referral)|utmcmd=referral|utmcct=/; pfx=bb3d75fb9016670c3303c022912f353d13fe37eaad82e87f5d267c2cd9b731aa%230%231842928548; language=%2Cen_US; logged_in=1; pfg=177e0aaff52595cdda1a98535b8bd198a6b2302c41a26aa57c734df64417b565%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576516677%2C%22vc%22%3A%22%22%7D%233809936128; tmgioct=5c1688c5c844820749187750',
+            '--header', 'Cookie: devicePixelRatio=1; documentWidth=1908; pfg=3f2c8811e5b1d0e477cc60b59f6972e2154b0ff3741c635a1038a3c9634b27b8%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576546323%2C%22vc%22%3A%22%22%7D%238765249020; tmgioct=5c16fc7917e3e80838884300; rxx=8ktp0p1b8dg.1czcn0ow&v=1; pfs=TzqIPCX6vFnmcq7G50J3mghXY; pfp=UfH2h7tLy8p3qUbTsyf04GhrwEcvbKb7rTMA5oPa; pfe=1552786596; pfu=356368977; pfx=348499e4cf546bd3708c35c89929f5996c72ecd296c9794c0c5f55ca7a24835b%231%233521227646; language=%2Cen_US; euconsent=BOY5ehoOY5ehoAOPoGENB7qAAAAid6fJfe7f98fR9v_lVkR7Gn6MwWiRwEQ4PUcH9ATzwQJhegZgUHcIydxJAoQQMEQALYJCDEgSkjMSoAiGgpQwoMosABQYEA; logged_in=1; nts=false',
             '--lua-script', 'tumblr.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
