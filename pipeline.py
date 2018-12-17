@@ -68,10 +68,6 @@ TRACKER_HOST = 'tracker.archiveteam.org'
 with open('cookies.json') as f:
     COOKIES = json.load(f)
 
-shuffle(COOKIES)
-
-COOKIE = COOKIES[0]
-
 ###########################################################################
 # This section defines project-specific tasks.
 #
@@ -175,6 +171,8 @@ def stats_id_function(item):
 
 class WgetArgs(object):
     def realize(self, item):
+        shuffle(COOKIES)
+        COOKIE = COOKIES[0]
         wget_args = [
             WGET_LUA,
             '-U', COOKIE['uax'],
