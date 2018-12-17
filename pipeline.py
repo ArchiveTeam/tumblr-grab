@@ -16,6 +16,7 @@ import subprocess
 import sys
 import time
 import string
+from threading import Lock
 
 import seesaw
 from seesaw.externalprocess import WgetDownload
@@ -74,6 +75,7 @@ with open('uax.txt') as f:
 
 UAX = None
 PFG = None
+UAX_PFG_LOCK = Lock()
 
 ###########################################################################
 # This section defines project-specific tasks.
@@ -89,8 +91,10 @@ class UAandPFG(SimpleTask):
 
     def process(self, item):
         global UAX, PFG
+        UA_PFG_LOCK.acquire()
         if self._counter > 0:
             self._counter -= 1
+            UA_PFG_LOCK.release()
             return None
         UAX = random.choice(USER_AGENTS)
         r = http_client.fetch(
@@ -141,6 +145,7 @@ class UAandPFG(SimpleTask):
             raise Exception('I was unable to get a PFG token, giving up on this item')
         PFG = m.group(1)
         self._counter = 50
+        UA_PFG_LOCK.release()
 
 class CheckIP(SimpleTask):
     def __init__(self):
