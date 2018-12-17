@@ -59,8 +59,9 @@ if not WGET_LUA:
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
 
-VERSION = '20181216.11'
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'
+VERSION = '20181217.01'
+#USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36'
+USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
 
@@ -172,7 +173,7 @@ class WgetArgs(object):
             WGET_LUA,
             '-U', USER_AGENT,
             '-nv',
-            '--header', 'Cookie: rxx=w9clogg4q1.1cyuzkvb&v=1; _ga=GA1.2.793667792.1544980653; _gid=GA1.2.17435551.1544980653; __utma=189990958.793667792.1544980653.1544980654.1544980654.1; __utmb=189990958.0.10.1544980654; __utmc=189990958; __utmz=189990958.1544980654.1.1.utmcsr=staff.tumblr.com|utmccn=(referral)|utmcmd=referral|utmcct=/; pfx=bb3d75fb9016670c3303c022912f353d13fe37eaad82e87f5d267c2cd9b731aa%230%231842928548; language=%2Cen_US; logged_in=1; pfg=177e0aaff52595cdda1a98535b8bd198a6b2302c41a26aa57c734df64417b565%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576516677%2C%22vc%22%3A%22%22%7D%233809936128; tmgioct=5c1688c5c844820749187750',
+            #'--header', 'Cookie: rxx=w9clogg4q1.1cyuzkvb&v=1; _ga=GA1.2.793667792.1544980653; _gid=GA1.2.17435551.1544980653; __utma=189990958.793667792.1544980653.1544980654.1544980654.1; __utmb=189990958.0.10.1544980654; __utmc=189990958; __utmz=189990958.1544980654.1.1.utmcsr=staff.tumblr.com|utmccn=(referral)|utmcmd=referral|utmcct=/; pfx=bb3d75fb9016670c3303c022912f353d13fe37eaad82e87f5d267c2cd9b731aa%230%231842928548; language=%2Cen_US; logged_in=1; pfg=177e0aaff52595cdda1a98535b8bd198a6b2302c41a26aa57c734df64417b565%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576516677%2C%22vc%22%3A%22%22%7D%233809936128; tmgioct=5c1688c5c844820749187750',
             '--lua-script', 'tumblr.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
