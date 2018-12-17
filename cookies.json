@@ -78,5 +78,55 @@
 		"uax": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A",
 		"pfx": "6d35cee9ac8759aa20abe142502a08e6e7400f01ec9abd5c754c475937071aad%230%235681270532",
 		"pfg": "fd26006680dfff8d30df73c0b3a7ab995acd45474fb26b8b9a2c2a39c610f5b2%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576565768%2C%22vc%22%3A%22%22%7D%235479746461"
+	},
+	{
+		"uax": "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0",
+		"pfx": "c787eba91e2086d9f23268d62edd6831dd6371e183ef55e15dd71a21ecc07e8e%230%233846493853",
+		"pfg": "af5130780e93acb3cea128a020ea9c96b443ac55baf8d3261727e2b83cb5854f%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568547%2C%22vc%22%3A%22%22%7D%236167321756"
+	},
+	{
+		"uax": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36",
+		"pfx": "ee870d240a8e382532cd20b6eb8156dd4e0ce8fee3b691d6cd9afdf9cfac0fd6%230%239192276575",
+		"pfg": "c7c3ca173c858ad2d123103dac850e317ed4cfa1111010af45bf604f7de3cabb%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568576%2C%22vc%22%3A%22%22%7D%231889154651"
+	},
+	{
+		"uax": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36",
+		"pfx": "c6019014f2d563e536f028f611b6ab1f07dcd340ef7b307a27f47b4b3ee351f7%230%236297454536",
+		"pfg": "440ea69b7fea448cc9ba984967c1b0cc27d58cee51ea1e9c0818353d5379ff5b%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568589%2C%22vc%22%3A%22%22%7D%231217981118"
+	},
+	{
+		"uax": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36",
+		"pfx": "247d3974b52d44d60b25fb11b5344a61b710603a79d9dfea6d920b5c1aec91fc%230%239276011787",
+		"pfg": "d3ff7ffe7f0ffce6869b873671dfeba4391e47b7fb13bc848d034d66b257ceb8%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568598%2C%22vc%22%3A%22%22%7D%230496244507"
+	},
+	{
+		"uax": "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko",
+		"pfx": "78885c396bb960e19b661b68f97fc2c160257aba630c4c92fd09f10f484c2c20%230%236088339814",
+		"pfg": "1e0c65edbf4a6ec81f7ad4dcd85fe53e9b5d474517a789579049ff990cc65f95%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568611%2C%22vc%22%3A%22%22%7D%231904439985"
+	},
+	{
+		"uax": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:63.0) Gecko/20100101 Firefox/63.0",
+		"pfx": "b833d4116b4195f891b93f011971bcdbac8ad6099e69caf84528a79bb6d5309f%230%239577812381",
+		"pfg": "15bb2b40537f195cb39e5d7a2599246f2b024c3e2494a218eeeb79e9495a9277%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568621%2C%22vc%22%3A%22%22%7D%232392339073"
+	},
+	{
+		"uax": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.1 Safari/605.1.15",
+		"pfx": "a13f7fef5b67d08ccebf07d6bb50e6ae395963dad83de1ccca0ce61bb8c9273a%230%231243531543",
+		"pfg": "f0305161873a3e70edd0d6c08a01bca7fb8e5a15e0eeaa4e36b0b33d29fe05c4%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568630%2C%22vc%22%3A%22%22%7D%238317095759"
+	},
+	{
+		"uax": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36",
+		"pfx": "bb0a7cbe7d623726d5cdb63bed45c42a809d31af941c66b5f98e5ed04dd3ea8a%230%235519990370",
+		"pfg": "177c36f19408194e4ab505498d37a6f90934c9b46e88577e15af13e0045d32e6%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568639%2C%22vc%22%3A%22%22%7D%235283299482"
+	},
+	{
+		"uax": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:63.0) Gecko/20100101 Firefox/63.0",
+		"pfx": "a9097959eeab95e8defbbbc6f5be4011fab03f13ee7f0f1781b5e8ea1592dc21%230%235034915108",
+		"pfg": "dfd6b4ab7735f7f673af49128ab28e4550ead2d7b5e1fad25fb9048c33b281d0%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568647%2C%22vc%22%3A%22%22%7D%236460245659"
+	},
+	{
+		"uax": "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko",
+		"pfx": "bb14e17c6e614807cb39be7f2f214387c206a4440e35f9b136e1b0efabe9292b%230%234787965228",
+		"pfg": "e4ebbb1edb107a9994f642475511f773ee0cf8a2d4f8e200847a40d1dea64396%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576568676%2C%22vc%22%3A%22%22%7D%232432390792"
 	}
 ]
