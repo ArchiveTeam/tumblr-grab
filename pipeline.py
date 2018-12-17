@@ -22,7 +22,8 @@ from seesaw.externalprocess import WgetDownload
 from seesaw.pipeline import Pipeline
 from seesaw.project import Project
 from seesaw.util import find_executable
-
+from random import shuffle
+import json
 
 # check the seesaw version
 if StrictVersion(seesaw.__version__) < StrictVersion('0.8.5'):
@@ -60,10 +61,12 @@ if not WGET_LUA:
 # It will be added to the WARC files and reported to the tracker.
 
 VERSION = '20181217.02'
-USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
+#USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
 
+with open('cookies.json') as f:
+    COOKIES = json.load(f)
 
 ###########################################################################
 # This section defines project-specific tasks.
@@ -168,11 +171,13 @@ def stats_id_function(item):
 
 class WgetArgs(object):
     def realize(self, item):
+        shuffle(COOKIES)
+        COOKIE = COOKIES[0]
         wget_args = [
             WGET_LUA,
-            '-U', USER_AGENT,
+            '-U', COOKIE['uax'],
             '-nv',
-            '--header', 'Cookie: devicePixelRatio=1; documentWidth=1908; pfg=3f2c8811e5b1d0e477cc60b59f6972e2154b0ff3741c635a1038a3c9634b27b8%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576546323%2C%22vc%22%3A%22%22%7D%238765249020; tmgioct=5c16fc7917e3e80838884300; rxx=8ktp0p1b8dg.1czcn0ow&v=1; pfs=TzqIPCX6vFnmcq7G50J3mghXY; pfp=UfH2h7tLy8p3qUbTsyf04GhrwEcvbKb7rTMA5oPa; pfe=1552786596; pfu=356368977; pfx=c6f420efbeb57552edffd8049595a0a9ab3d017e26fae750a9807ea84f24809b%230%235736169831; language=%2Cen_US; euconsent=BOY5ehoOY5ehoAOPoGENB7qAAAAid6fJfe7f98fR9v_lVkR7Gn6MwWiRwEQ4PUcH9ATzwQJhegZgUHcIydxJAoQQMEQALYJCDEgSkjMSoAiGgpQwoMosABQYEA; logged_in=1; nts=false; capture=InuEoRO40zTZ0RdTKYQMp7QUst8',
+            '--header', 'Cookie: pfx={}; pfg={}'.format(COOKIE['pfx'], COOKIE['pfg']),
             '--lua-script', 'tumblr.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
