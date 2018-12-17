@@ -91,61 +91,59 @@ class UAandPFG(SimpleTask):
 
     def process(self, item):
         global UAX, PFG
-        UAX_PFG_LOCK.acquire()
-        if self._counter > 0:
-            self._counter -= 1
-            UAX_PFG_LOCK.release()
-            return None
-        UAX = random.choice(USER_AGENTS)
-        r = http_client.fetch(
-            'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fabrandecarlo.tumblr.com%2F',
-            method = 'GET',
-            headers = {
-                'User-Agent': UAX
+        with UAX_PFG_LOCK:
+            if self._counter > 0:
+                self._counter -= 1
+                return None
+            UAX = random.choice(USER_AGENTS)
+            r = http_client.fetch(
+                'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fabrandecarlo.tumblr.com%2F',
+                method = 'GET',
+                headers = {
+                    'User-Agent': UAX
+                }
+            )
+            if r.code != 200:
+                item.log_output('I was unable to get a PFG token, giving up on this item')
+                raise Exception('I was unable to get a PFG token, giving up on this item')
+            m = re.search('<meta name="tumblr-form-key" id="tumblr_form_key" content="(![0-9]{13}\|[a-zA-Z0-9]+)">', r.body.decode('utf-8', 'ignore'))
+            if not m:
+                item.log_output('I was unable to get a PFG token, giving up on this item')
+                raise Exception('I was unable to get a PFG token, giving up on this item')
+            tumblr_form_key = m.group(1)
+            postdata = {
+                'eu_resident': True,
+                'gdpr_is_acceptable_age': True,
+                'gdpr_consent_core': True,
+                'gdpr_consent_first_party_ads': True,
+                'gdpr_consent_third_party_ads': True,
+                'gdpr_consent_search_history': True,
+                'redirect_to': 'https://abrandecarlo.tumblr.com/',
+                'gdpr_reconsent': False
             }
-        )
-        if r.code != 200:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        m = re.search('<meta name="tumblr-form-key" id="tumblr_form_key" content="(![0-9]{13}\|[a-zA-Z0-9]+)">', r.body.decode('utf-8', 'ignore'))
-        if not m:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        tumblr_form_key = m.group(1)
-        postdata = {
-            'eu_resident': True,
-            'gdpr_is_acceptable_age': True,
-            'gdpr_consent_core': True,
-            'gdpr_consent_first_party_ads': True,
-            'gdpr_consent_third_party_ads': True,
-            'gdpr_consent_search_history': True,
-            'redirect_to': 'https://abrandecarlo.tumblr.com/',
-            'gdpr_reconsent': False
-        }
-        r = http_client.fetch(
-            'https://www.tumblr.com/svc/privacy/consent',
-            method = 'POST',
-            headers = {
-                'User-Agent': UAX,
-                'x-tumblr-form-key': tumblr_form_key,
-                'content-type': 'application/json',
-                'referer': 'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fabrandecarlo.tumblr.com%2F'
-            },
-            body = json.dumps(postdata)
-        )
-        if r.code != 200:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        if not r.headers['set-cookie']:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        m = re.search('pfg=([^;]+)', r.headers['set-cookie'])
-        if not m:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        PFG = m.group(1)
-        self._counter = 50
-        UAX_PFG_LOCK.release()
+            r = http_client.fetch(
+                'https://www.tumblr.com/svc/privacy/consent',
+                method = 'POST',
+                headers = {
+                    'User-Agent': UAX,
+                    'x-tumblr-form-key': tumblr_form_key,
+                    'content-type': 'application/json',
+                    'referer': 'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fabrandecarlo.tumblr.com%2F'
+                },
+                body = json.dumps(postdata)
+            )
+            if r.code != 200:
+                item.log_output('I was unable to get a PFG token, giving up on this item')
+                raise Exception('I was unable to get a PFG token, giving up on this item')
+            if not r.headers['set-cookie']:
+                item.log_output('I was unable to get a PFG token, giving up on this item')
+                raise Exception('I was unable to get a PFG token, giving up on this item')
+            m = re.search('pfg=([^;]+)', r.headers['set-cookie'])
+            if not m:
+                item.log_output('I was unable to get a PFG token, giving up on this item')
+                raise Exception('I was unable to get a PFG token, giving up on this item')
+            PFG = m.group(1)
+            self._counter = 50
 
 class CheckIP(SimpleTask):
     def __init__(self):
