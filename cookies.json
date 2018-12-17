@@ -12,51 +12,51 @@
 	{
 		"uax": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
 		"pfx": "02beba4bf67ad2a618080a852dd8d72b89d18b27836a21bf7d2b4d39b37a9885%230%237566862925",
-		"pfg": "180d7dd14fa8ce2eb8b47517d9e3cedcfa530455f04de373a2309868a089b766%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559291%2C%22vc%22%3A%22%22%7D%233878688582"
+		"pfg": "42f13ac33bbe461238beb5c14590599d29ad403ce56adb1b9c7f18bbaa458872%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562332%2C%22vc%22%3A%22%22%7D%239887030097"
 	},
 	{
 		"uax": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36",
 		"pfx": "89e0b2326c0f56ef1a2c6fbb94935a98a67ce6bcaf1f6b4cda8f2965d4baa011%230%238687516316",
-		"pfg": "96118173f7484141c9c6e1c29c738bf0f09657edd6e7ecb7aba149b1946ef331%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559344%2C%22vc%22%3A%22%22%7D%235515556695"
+		"pfg": "730e84e0b34ddb28464350e7c83ee02c1ec5f8e4b5a4b3a3d797331008022e6c%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562350%2C%22vc%22%3A%22%22%7D%231866598787"
 	},
 	{
 		"uax": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0",
 		"pfx": "2ac9f45705e02f67d24c30e03bf9141309e96d0f4e799b1b7d6bb4cd9e346bc3%230%235366960423",
-		"pfg": "8c2c533d1396c9d98ed8c93d27aada95e513c8cadd04962b251854f7552ef83a%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559358%2C%22vc%22%3A%22%22%7D%231898455902"
+		"pfg": "09c4d23aa201317b2de1b809b60f1da3dfec1960ef7cb22de5133c4ac6ceb281%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562357%2C%22vc%22%3A%22%22%7D%237661476992"
 	},
 	{
 		"uax": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
 		"pfx": "7fab2ce8e1b234c14cb3446a85bace0022ebac0a227894deb23925000acfa361%230%235842022602",
-		"pfg": "18ae3582878e0568c830ec49619d26b6c7a89e25a19fc533e4a8b1d97c9b48e3%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559371%2C%22vc%22%3A%22%22%7D%237472326202"
+		"pfg": "5317648c6ec543171da0d19f5ada86c742c86bb36cce53be636e5a6c483926bd%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562364%2C%22vc%22%3A%22%22%7D%238681109371"
 	},
 	{
 		"uax": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134",
 		"pfx": "3030e29fa6b2b13ee524b2bb7a14650ca5df41119b9a2a8767da671a8d1c062c%230%238443355075",
-		"pfg": "e91f0d5b15c31894f8d2bcb5a5a8ffe8df3fb35000400e7da1195e3959f194ac%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559382%2C%22vc%22%3A%22%22%7D%238775921431"
+		"pfg": "7d553cfd0443ecc3b23142007800d306c37a562d665bf8f298173da8f2b665d4%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562373%2C%22vc%22%3A%22%22%7D%232724621853"
 	},
 	{
 		"uax": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.1 Safari/605.1.15",
 		"pfx": "dc261359406c908133879f533da64c86cc664537b48683e04a403c2795f41291%230%238007589133",
-		"pfg": "5a5baf2b1c8fa461f48379cea495d3b270bf8c24b727e5fc7ddc10b67857a9d4%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559394%2C%22vc%22%3A%22%22%7D%238512432149"
+		"pfg": "b82bc2112bbbd418c9c0a3fc6978e2e9c4a5a2d8af1b1f92d44cf4b0b31077d9%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562380%2C%22vc%22%3A%22%22%7D%230585234837"
 	},
 	{
 		"uax": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
 		"pfx": "b8e66a107726db76b546c7b32d8c2e9bc10f67e2f80519a71bc0b721c8a9c33d%230%235228678192",
-		"pfg": "94b91a3a330ff9b8900ca229d1b95a4196a4d7ff1f3a4b6ffc59874e20adeef0%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559405%2C%22vc%22%3A%22%22%7D%231186697805"
+		"pfg": "6f50c5b5f562f2d6c2875c4daf09671f8b36bef5428f51e82837b1de8c832975%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562387%2C%22vc%22%3A%22%22%7D%236453082948"
 	},
 	{
 		"uax": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0",
 		"pfx": "26fe27414de3cf677c2afcb69181a225df7ce3a4b0bf91974a1b2ef5f222b842%230%237404684119",
-		"pfg": "16b01f5102aa099c6e965e0433f99d9ad30401a1c2fd065684cfca5d07baaeeb%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559418%2C%22vc%22%3A%22%22%7D%238944657075"
+		"pfg": "8cdb58ef6f2df6df713aeb4d7db1de753964f9278da00b291b89e3142b483981%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562395%2C%22vc%22%3A%22%22%7D%237228020410"
 	},
 	{
 		"uax": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36",
 		"pfx": "ce7130cc98578158cbde53ff4340d1bed4e086ca8496d67f92ca92095774d49f%230%238845270228",
-		"pfg": "4fd6ba43169dd31a41992d9a6768098b5d15e78bd7b9fda3182d399296c074fc%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559428%2C%22vc%22%3A%22%22%7D%231290089093"
+		"pfg": "6e5b6ce8a108156853fe03005f743b6abb00c185dfe5d9285b0c0b5859121be4%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562401%2C%22vc%22%3A%22%22%7D%239474866863"
 	},
 	{
 		"uax": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
 		"pfx": "1c88709598186980fee49c5a22c0cfdc0e01c27c4543671ecbc27437ab86108d%230%231641363022",
-		"pfg": "278f73c1246741b9c0d173755930abda9a43628b97ef4f24f05969110d737923%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576559438%2C%22vc%22%3A%22%22%7D%231928470369"
+		"pfg": "a99801e5be87d03775891b3cc28b7fc6b884d315bfca6a9ce238a8d00241a974%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576562411%2C%22vc%22%3A%22%22%7D%233233797396"
 	}
 ]
