@@ -177,7 +177,7 @@ class WgetArgs(object):
             WGET_LUA,
             '-U', COOKIE['uax'],
             '-nv',
-            '--header', 'Cookie: pfx={}; pfg={}'.format(COOKIE['pfx'], COOKIE['pfg']),
+            '--header', 'Cookie: pfg={}'.format(COOKIE['pfg']),
             '--lua-script', 'tumblr.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
