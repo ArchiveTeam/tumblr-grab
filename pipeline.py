@@ -22,11 +22,20 @@ from seesaw.externalprocess import WgetDownload
 from seesaw.pipeline import Pipeline
 from seesaw.project import Project
 from seesaw.util import find_executable
+from random import randint
 
 
 # check the seesaw version
 if StrictVersion(seesaw.__version__) < StrictVersion('0.8.5'):
     raise Exception('This pipeline needs seesaw version 0.8.5 or higher.')
+
+creds = [
+    # 2 (EU)
+    ["Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0g", "Cookie: devicePixelRatio=1; documentWidth=1908; pfg=d34db43f9938c4edd04ecb390c4c43016f2ef2152ac00631f0b3ad68050d15d9%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576557203%2C%22vc%22%3A%22%22%7D%235199084284; tmgioct=5c17267feb20870501281380; rxx=7725ufwar7.1czj1m5w&v=1; pfs=gu8ludOpYyvPDk6Lc6sYgQly3z8; pfp=rxtwHYJ25QyFzT2SJL5w03FA19SJ93CwObMH5Xq2; pfe=1552797292; pfu=356386322; pfx=aab004145c089205d605476df1c80d25a5881d9852c659c95a0e96e90c2e6247%230%238556043077; language=%2Cen_US; euconsent=BOY54o4OY54o4AOPoGENB7qAAAAid6fJfe7f98fR9v_lVkR7Gn6MwWiRwEQ4PUcH9ATzwQJhegZgUHcIydxJAoQQMEQALYJCDEgSkjMSoAiGgpQwoMosABQYEA; logged_in=1; nts=false; capture=Y78cqHjp7P6PQCRInvRByEZsIHg"],
+    # 4 (EU)
+    ["Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36", "Cookie: devicePixelRatio=1; rxx=1lpa9faidby.1czd4fat&v=1; language=%2Cen_US; euconsent=BOY5gccOY5gccAOPoGENB7qAAAAid6fJfe7f98fR9v_lVkR7Gn6MwWiRwEQ4PUcH9ATzwQJhegZgUHcIydxJAoQQMEQALYJCDEgSkjMSoAiGgpQwoMosABQYEA; capture=6jDCpAZtYs26jPpGLy6Ws7AJiJY; nts=false; logged_in=1; documentWidth=1905"]
+]
+cred_id = randint(0, len(creds) - 1)
 
 
 ###########################################################################
@@ -60,9 +69,11 @@ if not WGET_LUA:
 # It will be added to the WARC files and reported to the tracker.
 
 VERSION = '20181217.02'
-USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
+USER_AGENT = creds[cred_id][0]
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
+
+print("Using UA ", creds[cred_id][0], " and cookie ", creds[cred_id][1])
 
 
 ###########################################################################
@@ -172,7 +183,7 @@ class WgetArgs(object):
             WGET_LUA,
             '-U', USER_AGENT,
             '-nv',
-            '--header', 'Cookie: devicePixelRatio=1; documentWidth=1908; pfg=3f2c8811e5b1d0e477cc60b59f6972e2154b0ff3741c635a1038a3c9634b27b8%23%7B%22eu_resident%22%3A1%2C%22gdpr_is_acceptable_age%22%3A1%2C%22gdpr_consent_core%22%3A1%2C%22gdpr_consent_first_party_ads%22%3A1%2C%22gdpr_consent_third_party_ads%22%3A1%2C%22gdpr_consent_search_history%22%3A1%2C%22exp%22%3A1576546323%2C%22vc%22%3A%22%22%7D%238765249020; tmgioct=5c16fc7917e3e80838884300; rxx=8ktp0p1b8dg.1czcn0ow&v=1; pfs=TzqIPCX6vFnmcq7G50J3mghXY; pfp=UfH2h7tLy8p3qUbTsyf04GhrwEcvbKb7rTMA5oPa; pfe=1552786596; pfu=356368977; pfx=c6f420efbeb57552edffd8049595a0a9ab3d017e26fae750a9807ea84f24809b%230%235736169831; language=%2Cen_US; euconsent=BOY5ehoOY5ehoAOPoGENB7qAAAAid6fJfe7f98fR9v_lVkR7Gn6MwWiRwEQ4PUcH9ATzwQJhegZgUHcIydxJAoQQMEQALYJCDEgSkjMSoAiGgpQwoMosABQYEA; logged_in=1; nts=false; capture=InuEoRO40zTZ0RdTKYQMp7QUst8',
+            '--header', creds[cred_id][1],
             '--lua-script', 'tumblr.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
