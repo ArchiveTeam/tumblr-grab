@@ -82,6 +82,12 @@ Other mass crawlers, in use at the moment:
   - You can't view the output in the browser yet.
   - A second script is added later to output HTML.
 
+#### How do I run and monitor multiple warriors?
+
+A small [tumblr-monitor.sh](https://gist.github.com/JustAnotherArchivist/f4617c902626377532692a341794f273) script can give you something more human-readable and specific than your typical `top` or `atop`.
+
+For more advanced monitoring, some ArchiveTeam members have shared their orchestration solutions, for instance Prometheus with [Terraform on DigitalOcean](https://gitlab.com/diggan/archiveteam-infra); see the [Warrior wiki page](https://www.archiveteam.org/index.php?title=Warrior) for more information.
+
 ## Overly Technical Details:
 
 #### What about IPv6 /64 round robin?
