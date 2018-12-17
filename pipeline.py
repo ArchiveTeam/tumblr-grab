@@ -64,7 +64,7 @@ if not WGET_LUA:
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
 
-VERSION = '20181217.11'
+VERSION = '20181217.12'
 #USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -103,7 +103,7 @@ class UAandPFG(SimpleTask):
         if r.code != 200:
             item.log_output('I was unable to get a PFG token, giving up on this item')
             raise Exception('I was unable to get a PFG token, giving up on this item')
-        m = re.search('<meta name="tumblr-form-key" id="tumblr_form_key" content="(![0-9]{13}\|[a-zA-Z0-9]+)">', r.body.decode())
+        m = re.search('<meta name="tumblr-form-key" id="tumblr_form_key" content="(![0-9]{13}\|[a-zA-Z0-9]+)">', r.body.decode('utf-8', 'ignore'))
         if not m:
             item.log_output('I was unable to get a PFG token, giving up on this item')
             raise Exception('I was unable to get a PFG token, giving up on this item')
