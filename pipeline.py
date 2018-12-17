@@ -22,12 +22,8 @@ from seesaw.externalprocess import WgetDownload
 from seesaw.pipeline import Pipeline
 from seesaw.project import Project
 from seesaw.util import find_executable
+from random import shuffle
 import json
-import re
-
-from tornado.httpclient import HTTPClient
-
-http_client = HTTPClient()
 
 # check the seesaw version
 if StrictVersion(seesaw.__version__) < StrictVersion('0.8.5'):
@@ -64,16 +60,13 @@ if not WGET_LUA:
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
 
-VERSION = '20181217.11'
+VERSION = '20181217.10'
 #USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
 
-with open('uax.txt') as f:
-    USER_AGENTS = list(filter(lambda x: not re.match('^(#.*)?$', x), map(lambda x: x.strip(), f.readlines())))
-
-UAX = None
-PFG = None
+with open('cookies.json') as f:
+    COOKIES = json.load(f)
 
 ###########################################################################
 # This section defines project-specific tasks.
@@ -81,66 +74,6 @@ PFG = None
 # Simple tasks (tasks that do not need any concurrency) are based on the
 # SimpleTask class and have a process(item) method that is called for
 # each item.
-
-class UAandPFG(SimpleTask):
-    def __init__(self):
-        SimpleTask.__init__(self, 'UAandPFG')
-        self._counter = 0
-
-    def process(self, item):
-        global UAX, PFG
-        if self._counter > 0:
-            self._counter -= 1
-        UAX = random.sample(USER_AGENTS, 1)[0].strip()
-        r = http_client.fetch(
-            'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fabrandecarlo.tumblr.com%2F',
-            method = 'GET',
-            headers = {
-                'User-Agent': UAX
-            }
-        )
-        if r.code != 200:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        m = re.search('<meta name="tumblr-form-key" id="tumblr_form_key" content="(![0-9]{13}\|[a-zA-Z0-9]+)">', r.body.decode())
-        if not m:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        tumblr_form_key = m.group(1)
-        postdata = {
-            'eu_resident': True,
-            'gdpr_is_acceptable_age': True,
-            'gdpr_consent_core': True,
-            'gdpr_consent_first_party_ads': True,
-            'gdpr_consent_third_party_ads': True,
-            'gdpr_consent_search_history': True,
-            'redirect_to': 'https://abrandecarlo.tumblr.com/',
-            'gdpr_reconsent': False
-        }
-        r = http_client.fetch(
-            'https://www.tumblr.com/svc/privacy/consent',
-            method = 'POST',
-            headers = {
-                'User-Agent': UAX,
-                'x-tumblr-form-key': tumblr_form_key,
-                'content-type': 'application/json',
-                'referer': 'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fabrandecarlo.tumblr.com%2F'
-            },
-            body = json.dumps(postdata)
-        )
-        if r.code != 200:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        if not r.headers['set-cookie']:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        m = re.search('pfg=([^;]+)', r.headers['set-cookie'])
-        if not m:
-            item.log_output('I was unable to get a PFG token, giving up on this item')
-            raise Exception('I was unable to get a PFG token, giving up on this item')
-        PFG = m.group(1)
-        self._counter = 50
-
 class CheckIP(SimpleTask):
     def __init__(self):
         SimpleTask.__init__(self, 'CheckIP')
@@ -238,12 +171,13 @@ def stats_id_function(item):
 
 class WgetArgs(object):
     def realize(self, item):
-        print('Running wget-lua with uax={} pfg={}'.format(UAX, PFG))
+        shuffle(COOKIES)
+        COOKIE = COOKIES[0]
         wget_args = [
             WGET_LUA,
-            '-U', UAX,
+            '-U', COOKIE['uax'],
             '-nv',
-            '--header', 'Cookie: pfg={}'.format(PFG),
+            '--header', 'Cookie: pfx={}; pfg={}'.format(COOKIE['pfx'], COOKIE['pfg']),
             '--lua-script', 'tumblr.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
@@ -305,7 +239,6 @@ project = Project(
 
 pipeline = Pipeline(
     CheckIP(),
-    UAandPFG(),
     GetItemFromTracker('http://%s/%s' % (TRACKER_HOST, TRACKER_ID), downloader,
         VERSION),
     PrepareDirectories(warc_prefix='tumblr'),
