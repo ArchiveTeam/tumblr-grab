@@ -277,9 +277,11 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
 
   if (status_code >= 300 and status_code <= 399) then
     local newloc = http_stat["newloc"]
-    if string.match(newloc, "https?://www%.tumblr%.com/privacy/consent")
-    or string.match(newloc, "https?://www%.tumblr%.com/safe%-mode") then
+    if string.match(newloc, "https?://www%.tumblr%.com/privacy/consent") then
       abortgrab = true
+    end
+    if string.match(newloc, "https?://www%.tumblr%.com/safe%-mode") then
+      return wget.actions.EXIT
     end
   end
   
