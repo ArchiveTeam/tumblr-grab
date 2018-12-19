@@ -105,6 +105,7 @@ class UAandPFG(SimpleTask):
                     item.log_output('No PFG/GDPR cookie needed')
                     PFG = None
                     UAX = TMPUAX
+                    self._reuses = 0
                     return None
                 if PFG and self._reuses < 5:
                     item.log_output('I was unable to get a PFG token, reusing existing PFG token')
