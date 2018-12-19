@@ -92,12 +92,12 @@ class UAandPFG(SimpleTask):
     def process(self, item):
         global UAX, PFG
         with UAX_PFG_LOCK:
-            UAX = random.choice(USER_AGENTS)
+            TMPUAX = random.choice(USER_AGENTS)
             r = http_client.fetch(
                 'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fstaff.tumblr.com%2F',
                 method = 'GET',
                 headers = {
-                    'User-Agent': UAX
+                    'User-Agent': TMPUAX
                 }
             )
             if r.code != 200:
@@ -130,7 +130,7 @@ class UAandPFG(SimpleTask):
                 'https://www.tumblr.com/svc/privacy/consent',
                 method = 'POST',
                 headers = {
-                    'User-Agent': UAX,
+                    'User-Agent': TMPUAX,
                     'x-tumblr-form-key': tumblr_form_key,
                     'content-type': 'application/json',
                     'referer': 'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fstaff.tumblr.com%2F'
@@ -169,6 +169,7 @@ class UAandPFG(SimpleTask):
                 item.log_output('I was unable to get a PFG token, giving up on this item')
                 raise Exception('I was unable to get a PFG token, giving up on this item')
             PFG = TMPPFG
+            UAX = TMPUAX
             self._reuses = 0
 
 class CheckIP(SimpleTask):
