@@ -87,27 +87,32 @@ UAX_PFG_LOCK = Lock()
 class UAandPFG(SimpleTask):
     def __init__(self):
         SimpleTask.__init__(self, 'UAandPFG')
-        self._counter = 0
+        self._reuses = 0
 
     def process(self, item):
         global UAX, PFG
         with UAX_PFG_LOCK:
-            if self._counter > 0:
-                self._counter -= 1
-                return None
-            UAX = random.choice(USER_AGENTS)
+            TMPUAX = random.choice(USER_AGENTS)
             r = http_client.fetch(
-                'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fabrandecarlo.tumblr.com%2F',
+                'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fstaff.tumblr.com%2F',
                 method = 'GET',
                 headers = {
-                    'User-Agent': UAX
+                    'User-Agent': TMPUAX
                 }
             )
             if r.code != 200:
+                if PFG and self._reuses < 5:
+                    item.log_output('I was unable to get a PFG token, reusing existing PFG token')
+                    self._reuses += 1
+                    return None
                 item.log_output('I was unable to get a PFG token, giving up on this item')
                 raise Exception('I was unable to get a PFG token, giving up on this item')
             m = re.search('<meta name="tumblr-form-key" id="tumblr_form_key" content="(![0-9]{13}\|[a-zA-Z0-9]+)">', r.body.decode('utf-8', 'ignore'))
             if not m:
+                if PFG and self._reuses < 5:
+                    item.log_output('I was unable to get a PFG token, reusing existing PFG token')
+                    self._reuses += 1
+                    return None
                 item.log_output('I was unable to get a PFG token, giving up on this item')
                 raise Exception('I was unable to get a PFG token, giving up on this item')
             tumblr_form_key = m.group(1)
@@ -118,32 +123,54 @@ class UAandPFG(SimpleTask):
                 'gdpr_consent_first_party_ads': True,
                 'gdpr_consent_third_party_ads': True,
                 'gdpr_consent_search_history': True,
-                'redirect_to': 'https://abrandecarlo.tumblr.com/',
+                'redirect_to': 'https://staff.tumblr.com/',
                 'gdpr_reconsent': False
             }
             r = http_client.fetch(
                 'https://www.tumblr.com/svc/privacy/consent',
                 method = 'POST',
                 headers = {
-                    'User-Agent': UAX,
+                    'User-Agent': TMPUAX,
                     'x-tumblr-form-key': tumblr_form_key,
                     'content-type': 'application/json',
-                    'referer': 'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fabrandecarlo.tumblr.com%2F'
+                    'referer': 'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fstaff.tumblr.com%2F'
                 },
                 body = json.dumps(postdata)
             )
             if r.code != 200:
+                if PFG and self._reuses < 5:
+                    item.log_output('I was unable to get a PFG token, reusing existing PFG token')
+                    self._reuses += 1
+                    return None
                 item.log_output('I was unable to get a PFG token, giving up on this item')
                 raise Exception('I was unable to get a PFG token, giving up on this item')
             if not r.headers['set-cookie']:
+                if PFG and self._reuses < 5:
+                    item.log_output('I was unable to get a PFG token, reusing existing PFG token')
+                    self._reuses += 1
+                    return None
                 item.log_output('I was unable to get a PFG token, giving up on this item')
                 raise Exception('I was unable to get a PFG token, giving up on this item')
             m = re.search('pfg=([^;]+)', r.headers['set-cookie'])
             if not m:
+                if PFG and self._reuses < 5:
+                    item.log_output('I was unable to get a PFG token, reusing existing PFG token')
+                    self._reuses += 1
+                    return None
                 item.log_output('I was unable to get a PFG token, giving up on this item')
                 raise Exception('I was unable to get a PFG token, giving up on this item')
-            PFG = m.group(1)
-            self._counter = 50
+            TMPPFG = m.group(1)
+            if TMPPFG == "deleted":
+                # special string returned by tumblr when request failed
+                if PFG and self._reuses < 5:
+                    item.log_output('I was unable to get a PFG token, reusing existing PFG token')
+                    self._reuses += 1
+                    return None
+                item.log_output('I was unable to get a PFG token, giving up on this item')
+                raise Exception('I was unable to get a PFG token, giving up on this item')
+            PFG = TMPPFG
+            UAX = TMPUAX
+            self._reuses = 0
 
 class CheckIP(SimpleTask):
     def __init__(self):
