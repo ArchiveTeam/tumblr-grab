@@ -65,7 +65,7 @@ if not WGET_LUA:
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
 
-VERSION = '20181219.02'
+VERSION = '20181219.03'
 #USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -101,6 +101,10 @@ class UAandPFG(SimpleTask):
                 }
             )
             if r.code != 200:
+                if r.code == 303:
+                    item.log_output('No PFG/GDPR cookie needed')
+                    PFG = None
+                    UAX = TMPUAX
                 if PFG and self._reuses < 5:
                     item.log_output('I was unable to get a PFG token, reusing existing PFG token')
                     self._reuses += 1
@@ -274,7 +278,6 @@ class WgetArgs(object):
             WGET_LUA,
             '-U', UAX,
             '-nv',
-            '--header', 'Cookie: pfg={}'.format(PFG),
             '--lua-script', 'tumblr.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
@@ -295,6 +298,8 @@ class WgetArgs(object):
             '--warc-header', 'tumblr-dld-script-version: ' + VERSION,
             '--warc-header', ItemInterpolation('tumblr-blog: %(item_name)s')
         ]
+        if PFG:
+            wget_args.append('--header', 'Cookie: pfg={}'.format(PFG))
 
         item_name = item['item_name']
         assert ':' in item_name
