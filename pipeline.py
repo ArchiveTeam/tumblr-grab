@@ -168,6 +168,7 @@ class UAandPFG(SimpleTask):
                     return None
                 item.log_output('I was unable to get a PFG token, giving up on this item')
                 raise Exception('I was unable to get a PFG token, giving up on this item')
+            PFG = TMPPFG
             self._reuses = 0
 
 class CheckIP(SimpleTask):
