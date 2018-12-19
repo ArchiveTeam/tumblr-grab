@@ -101,7 +101,7 @@ class UAandPFG(SimpleTask):
                 }
             )
             if r.code != 200:
-                if r.code == 303:
+                if r.code == 303 and (r.headers['location'] == '/' or r.headers['location'] == 'https://staff.tumblr.com/'):
                     item.log_output('No PFG/GDPR cookie needed')
                     PFG = None
                     UAX = TMPUAX
