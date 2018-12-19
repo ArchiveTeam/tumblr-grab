@@ -26,9 +26,9 @@ from seesaw.util import find_executable
 import json
 import re
 
-from tornado.httpclient import HTTPClient
+from tornado import httpclient
 
-http_client = HTTPClient()
+http_client = httpclient.HTTPClient()
 
 # check the seesaw version
 if StrictVersion(seesaw.__version__) < StrictVersion('0.8.5'):
@@ -65,7 +65,7 @@ if not WGET_LUA:
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
 
-VERSION = '20181219.02'
+VERSION = '20181219.03'
 #USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
 TRACKER_ID = 'tumblr'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -84,23 +84,34 @@ UAX_PFG_LOCK = Lock()
 # SimpleTask class and have a process(item) method that is called for
 # each item.
 
-class UAandPFG(SimpleTask):
+class UAXandPFG(SimpleTask):
     def __init__(self):
-        SimpleTask.__init__(self, 'UAandPFG')
+        SimpleTask.__init__(self, 'UAXandPFG')
         self._reuses = 0
 
     def process(self, item):
         global UAX, PFG
         with UAX_PFG_LOCK:
             TMPUAX = random.choice(USER_AGENTS)
-            r = http_client.fetch(
-                'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fstaff.tumblr.com%2F',
-                method = 'GET',
-                headers = {
-                    'User-Agent': TMPUAX
-                }
-            )
+            try:
+                r = http_client.fetch(
+                    'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fstaff.tumblr.com%2F',
+                    method = 'GET',
+                    headers = {
+                        'User-Agent': TMPUAX
+                    },
+                    follow_redirects = False,
+                    allow_ipv6 = False
+                )
+            except httpclient.HTTPError as e:
+                r = e.response
             if r.code != 200:
+                if r.code == 303 and r.headers['location'] and (r.headers['location'] == '/' or r.headers['location'] == 'https://staff.tumblr.com/'):
+                    item.log_output('No PFG/GDPR cookie needed')
+                    PFG = None
+                    UAX = TMPUAX
+                    self._reuses = 0
+                    return None
                 if PFG and self._reuses < 5:
                     item.log_output('I was unable to get a PFG token, reusing existing PFG token')
                     self._reuses += 1
@@ -126,17 +137,22 @@ class UAandPFG(SimpleTask):
                 'redirect_to': 'https://staff.tumblr.com/',
                 'gdpr_reconsent': False
             }
-            r = http_client.fetch(
-                'https://www.tumblr.com/svc/privacy/consent',
-                method = 'POST',
-                headers = {
-                    'User-Agent': TMPUAX,
-                    'x-tumblr-form-key': tumblr_form_key,
-                    'content-type': 'application/json',
-                    'referer': 'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fstaff.tumblr.com%2F'
-                },
-                body = json.dumps(postdata)
-            )
+            try:
+                r = http_client.fetch(
+                    'https://www.tumblr.com/svc/privacy/consent',
+                    method = 'POST',
+                    headers = {
+                        'User-Agent': TMPUAX,
+                        'x-tumblr-form-key': tumblr_form_key,
+                        'content-type': 'application/json',
+                        'referer': 'https://www.tumblr.com/privacy/consent?redirect=https%3A%2F%2Fstaff.tumblr.com%2F'
+                    },
+                    body = json.dumps(postdata),
+                    follow_redirects = False,
+                    allow_ipv6 = False
+                )
+            except httpclient.HTTPError as e:
+                r = e.response
             if r.code != 200:
                 if PFG and self._reuses < 5:
                     item.log_output('I was unable to get a PFG token, reusing existing PFG token')
@@ -274,7 +290,6 @@ class WgetArgs(object):
             WGET_LUA,
             '-U', UAX,
             '-nv',
-            '--header', 'Cookie: pfg={}'.format(PFG),
             '--lua-script', 'tumblr.lua',
             '-o', ItemInterpolation('%(item_dir)s/wget.log'),
             '--no-check-certificate',
@@ -295,6 +310,8 @@ class WgetArgs(object):
             '--warc-header', 'tumblr-dld-script-version: ' + VERSION,
             '--warc-header', ItemInterpolation('tumblr-blog: %(item_name)s')
         ]
+        if PFG:
+            wget_args.extend(['--header', 'Cookie: pfg={}'.format(PFG)])
 
         item_name = item['item_name']
         assert ':' in item_name
@@ -336,7 +353,7 @@ project = Project(
 
 pipeline = Pipeline(
     CheckIP(),
-    UAandPFG(),
+    UAXandPFG(),
     GetItemFromTracker('http://%s/%s' % (TRACKER_HOST, TRACKER_ID), downloader,
         VERSION),
     PrepareDirectories(warc_prefix='tumblr'),
