@@ -301,7 +301,7 @@ class WgetArgs(object):
             '--warc-header', ItemInterpolation('tumblr-blog: %(item_name)s')
         ]
         if PFG:
-            wget_args.append('--header', 'Cookie: pfg={}'.format(PFG))
+            wget_args.extend(['--header', 'Cookie: pfg={}'.format(PFG)])
 
         item_name = item['item_name']
         assert ':' in item_name
