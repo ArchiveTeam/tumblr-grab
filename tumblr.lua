@@ -42,7 +42,9 @@ end
 
 should_add_media = function(url, parenturl)
   if string.match(url, video) 
-  or string.match(url, "vtt%.tumblr%.com")
+  or string.match(url, "^https?://vtt%.tumblr%.com")
+  or string.match(url, "^https?://vt%.tumblr%.com")
+  or string.match(url, "^https?://v%.tumblr%.com")
   then
     return true
   end
